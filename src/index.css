@@ -1,0 +1,326 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  
+  html {
+    scroll-behavior: smooth !important;
+    scroll-padding-top: 96px;
+  }
+  
+  body {
+    background-color: #ffffff;
+    color: #0f172a;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  section[id] {
+    scroll-margin-top: 96px;
+  }
+
+  button, a {
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* ==========================================================================
+   Custom Scrollbar - Modern Cross-Browser (Chrome, Edge, Safari, Firefox)
+   ========================================================================== */
+
+/* Standard CSS for Firefox & Modern Engines */
+html, body {
+  scrollbar-width: thin;
+  scrollbar-color: #a855f7 #f8f6fe;
+}
+
+/* WebKit / Blink (Chrome, Edge, Safari, Opera) */
+::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+  background: #f8f6fe;
+  border-left: 1px solid rgba(124, 58, 237, 0.08);
+}
+
+::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #c084fc 0%, #9333ea 100%);
+  border-radius: 9999px;
+  border: 2px solid #f8f6fe;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover,
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #a855f7 0%, #7e22ce 100%);
+  border: 2px solid #f8f6fe;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:active,
+html::-webkit-scrollbar-thumb:active,
+body::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #9333ea 0%, #6b21a8 100%);
+  border: 2px solid #f8f6fe;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: #f8f6fe;
+}
+
+/* Utility to hide scrollbars while keeping scroll functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Light Mode Glassmorphism & custom utility classes */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  box-shadow: 0 10px 30px -5px rgba(124, 58, 237, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(124, 58, 237, 0.28);
+  box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.12);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.06);
+}
+
+.purple-glow-bg {
+  background: radial-gradient(circle at 50% 30%, rgba(124, 58, 237, 0.09) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.cyan-glow-bg {
+  background: radial-gradient(circle at 70% 20%, rgba(6, 182, 212, 0.08) 0%, rgba(255, 255, 255, 0) 65%);
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, #3b0764 0%, #6b21a8 50%, #9333ea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-brand {
+  background: linear-gradient(135deg, #0891b2 0%, #6366f1 50%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Parametric wave SVG line styling */
+.wave-path {
+  stroke-dasharray: 8 6;
+  animation: waveDash 30s linear infinite;
+}
+
+@keyframes waveDash {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+/* Marquee track animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 60s linear infinite;
+  will-change: transform;
+}
+
+.group-marquee:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* Multi-Account Scale Animations */
+@keyframes verticalMarqueeUp {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes verticalMarqueeDown {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes radarPing {
+  0% {
+    transform: scale(0.65);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes orbitRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-vertical-up {
+  animation: verticalMarqueeUp 22s linear infinite;
+  will-change: transform;
+}
+
+.animate-vertical-down {
+  animation: verticalMarqueeDown 26s linear infinite;
+  will-change: transform;
+}
+
+.animate-radar-1 {
+  animation: radarPing 4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-radar-2 {
+  animation: radarPing 4s cubic-bezier(0, 0, 0.2, 1) infinite 1.35s;
+}
+
+.animate-radar-3 {
+  animation: radarPing 4s cubic-bezier(0, 0, 0.2, 1) infinite 2.7s;
+}
+
+.animate-float-gentle {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+.animate-orbit-slow {
+  animation: orbitRotate 45s linear infinite;
+}
+
+.animate-orbit-reverse {
+  animation: orbitRotate 60s linear infinite reverse;
+}
+
+/* Hero orbital constellation: each ring pairs a normal + reverse rotation
+   at the SAME duration so the icon revolves around the center while its
+   own artwork stays upright (the reverse spin cancels the ring's spin). */
+.animate-orbit-outer {
+  animation: orbitRotate 50s linear infinite;
+}
+
+.animate-orbit-outer-reverse {
+  animation: orbitRotate 50s linear infinite reverse;
+}
+
+.animate-orbit-middle {
+  animation: orbitRotate 38s linear infinite;
+}
+
+.animate-orbit-middle-reverse {
+  animation: orbitRotate 38s linear infinite reverse;
+}
+
+.animate-orbit-inner {
+  animation: orbitRotate 28s linear infinite;
+}
+
+.animate-orbit-inner-reverse {
+  animation: orbitRotate 28s linear infinite reverse;
+}
+
+/* ==========================================================================
+   V2 Cosmic Dusk Theme Utilities (Inspired by media_1789901940089.png)
+   ========================================================================== */
+.dusk-bg {
+  background-color: #070814;
+  background-image: 
+    radial-gradient(ellipse 65% 55% at 5% 5%, rgba(251, 191, 36, 0.22) 0%, rgba(249, 115, 22, 0.12) 30%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 50% 35%, rgba(107, 33, 168, 0.55) 0%, rgba(88, 28, 135, 0.3) 45%, transparent 75%),
+    radial-gradient(ellipse 50% 50% at 85% 85%, rgba(30, 27, 75, 0.4) 0%, transparent 60%);
+}
+
+.dusk-glass-panel {
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dusk-glass-panel-hover {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dusk-glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(168, 85, 247, 0.35);
+  box-shadow: 0 0 35px -5px rgba(147, 51, 234, 0.2);
+}
+
+.glow-halo-rose {
+  box-shadow: 0 0 22px rgba(244, 63, 94, 0.7);
+}
+
+.glow-halo-amber {
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.7);
+}
+
+.glow-halo-blue {
+  box-shadow: 0 0 22px rgba(59, 130, 246, 0.7);
+}
+
+.glow-halo-purple {
+  box-shadow: 0 0 22px rgba(168, 85, 247, 0.7);
+}
+
+.glow-halo-cyan {
+  box-shadow: 0 0 22px rgba(6, 182, 212, 0.7);
+}
+
+
