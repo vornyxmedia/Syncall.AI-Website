@@ -11,7 +11,20 @@
     scroll-behavior: smooth !important;
     scroll-padding-top: 96px;
   }
-  
+
+  /* Native scrollbar is replaced by <CustomScrollbar /> on desktop only;
+     mobile/touch keeps the OS's own scrollbar and gesture behavior. */
+  @media (min-width: 1024px) and (pointer: fine) {
+    html {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   body {
     background-color: #ffffff;
     color: #0f172a;

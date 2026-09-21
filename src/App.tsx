@@ -15,6 +15,7 @@ import { ContactModal } from './components/ContactModal';
 import { CustomerResults } from './components/CustomerResults';
 import { OnePlatformSection } from './components/OnePlatformSection';
 import { ThreeKindsOfScale } from './components/ThreeKindsOfScale';
+import { CustomScrollbar } from './components/CustomScrollbar';
 
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 
@@ -56,10 +57,13 @@ function MainLayout() {
         : 'bg-white text-slate-900 selection:bg-purple-600 selection:text-white'
     }`}>
       {/* Top Scroll Reading Progress Indicator */}
-      <div 
+      <div
         className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 z-[100] origin-left pointer-events-none transition-[width] duration-100 ease-out"
         style={{ width: `${scrollProgress}%` }}
       />
+
+      {/* Custom scrollbar (desktop only; native scrollbar stays on mobile) */}
+      <CustomScrollbar />
 
       {/* Top Navbar */}
       <Navbar 
