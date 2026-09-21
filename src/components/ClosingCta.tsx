@@ -59,7 +59,7 @@ export const ClosingCta: React.FC<ClosingCtaProps> = ({ onOpenGoalModal }) => {
                 isV2 ? 'border-white/20 bg-[#161a3d]' : 'border-white bg-slate-100'
               }`}>
                 <img 
-                  src="/problem-founder-workspace.jpg" 
+                  src={`${import.meta.env.BASE_URL}problem-founder-workspace.jpg`}
                   alt="Marketing leader with Syncall" 
                   className="w-full h-full object-cover object-top" 
                 />

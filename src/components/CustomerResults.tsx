@@ -28,7 +28,7 @@ export const CustomerResults: React.FC = () => {
       author: 'Danielle Roberts',
       role: 'Director of Implementation & Support',
       company: 'Rentable',
-      avatar: '/avatar-danielle.jpg',
+      avatar: `${import.meta.env.BASE_URL}avatar-danielle.jpg`,
     },
     {
       id: 'dtch',
@@ -39,7 +39,7 @@ export const CustomerResults: React.FC = () => {
       author: 'Stef Oosterik',
       role: 'Quality Manager & Founder',
       company: 'Dtch. Digitals',
-      avatar: '/avatar-stef.jpg',
+      avatar: `${import.meta.env.BASE_URL}avatar-stef.jpg`,
     },
     {
       id: 'yourfellow',
@@ -50,7 +50,7 @@ export const CustomerResults: React.FC = () => {
       author: 'Linda van Baal',
       role: 'Online Marketing Consultant',
       company: 'YourFellow',
-      avatar: '/avatar-linda.jpg',
+      avatar: `${import.meta.env.BASE_URL}avatar-linda.jpg`,
     },
     {
       id: 'aura',
@@ -61,7 +61,7 @@ export const CustomerResults: React.FC = () => {
       author: 'Marcus Chen',
       role: 'Head of Growth',
       company: 'Aura Commerce',
-      avatar: '/problem-founder-workspace.jpg',
+      avatar: `${import.meta.env.BASE_URL}problem-founder-workspace.jpg`,
     },
   ];
 

@@ -31,7 +31,7 @@ export const Footer: React.FC<FooterProps> = () => {
           <div className="lg:col-span-4 space-y-4">
             <a href="#" className="inline-block">
               <img 
-                src="/logo.png" 
+                src={`${import.meta.env.BASE_URL}logo.png`}
                 alt="Syncall.ai" 
                 className="h-13 sm:h-16 w-auto object-contain brightness-0 invert" 
               />

@@ -26,7 +26,7 @@ export const MeetTheAi: React.FC<MeetTheAiProps> = ({ onOpenGoalModal }) => {
         {/* Authentic 3D Corrugated Parametric Wave Texture Background */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/meet-ai-wave-curtain.jpg" 
+            src={`${import.meta.env.BASE_URL}meet-ai-wave-curtain.jpg`}
             alt="Parametric AI wave curtain texture" 
             className="w-full h-full object-cover object-center opacity-65 brightness-[0.7]" 
           />

@@ -61,7 +61,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
                   
                   {/* Brand Header */}
                   <div className={`flex items-center justify-center gap-1.5 pb-2 border-b ${isV2 ? 'border-white/10' : 'border-slate-100'}`}>
-                    <img src="/logo.png" alt="Syncall" className={`h-5 w-auto object-contain ${isV2 ? 'brightness-0 invert' : ''}`} />
+                    <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Syncall" className={`h-5 w-auto object-contain ${isV2 ? 'brightness-0 invert' : ''}`} />
                   </div>
 
                   {/* Title */}

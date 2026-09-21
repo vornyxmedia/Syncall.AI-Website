@@ -76,7 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
             className="flex items-center shrink-0 cursor-pointer"
           >
             <img 
-              src="/logo.png" 
+              src={`${import.meta.env.BASE_URL}logo.png`}
               alt="Syncall.ai" 
               className={`h-7 sm:h-8 w-auto object-contain transition-all ${isDarkHeader ? 'brightness-0 invert' : ''}`} 
             />

@@ -103,7 +103,7 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({
             {/* ITEM 1 (Top-Left): Rounded Founder Photo */}
             <div className="relative rounded-[32px] sm:rounded-[36px] overflow-hidden shadow-lg shadow-purple-950/5 border border-purple-100/70 min-h-[260px] sm:min-h-[280px] bg-slate-100">
               <img 
-                src="/problem-founder-workspace.jpg" 
+                src={`${import.meta.env.BASE_URL}problem-founder-workspace.jpg`}
                 alt="Business owner working relaxed with Syncall AI" 
                 className="w-full h-full object-cover object-center" 
               />
