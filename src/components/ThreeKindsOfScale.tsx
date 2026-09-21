@@ -87,7 +87,7 @@ const PLATFORM_STREAM: StreamItem[] = [
   { symbol: '△', bg: 'bg-white/80', text: 'text-slate-400' },
   { icon: <GoogleAnalyticsLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-amber-600' },
   { icon: <XLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-slate-900' },
-  { icon: <AmazonLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-orange-600' },
+  { icon: <AmazonLogo className="h-2.5 w-auto" />, bg: 'bg-white', text: 'text-orange-600' },
   { symbol: '☆', bg: 'bg-white/80', text: 'text-slate-400' },
 ];
 

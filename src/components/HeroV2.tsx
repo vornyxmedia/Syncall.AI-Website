@@ -165,12 +165,12 @@ export const HeroV2: React.FC<HeroV2Props> = ({ onOpenGoalModal, onScrollToDemo 
                 </div>
               </div>
 
-              {/* Middle ring - Amazon */}
+              {/* Middle ring - Amazon (wordmark, so its chip is a wide pill instead of a square) */}
               <div className="absolute inset-0 z-20 flex items-center justify-center animate-orbit-middle" style={{ animationDelay: '-19s' }}>
                 <div className="translate-x-[170px] sm:translate-x-[190px]">
                   <div className="animate-orbit-middle-reverse" style={{ animationDelay: '-19s' }}>
-                    <div className="w-11 h-11 rounded-2xl bg-black/85 backdrop-blur-xl border border-white/25 flex items-center justify-center shadow-[0_0_20px_rgba(245,158,11,0.5)]">
-                      <AmazonLogo className="w-5 h-5" />
+                    <div className="h-11 px-3 rounded-2xl bg-black/85 backdrop-blur-xl border border-white/25 inline-flex items-center justify-center shadow-[0_0_20px_rgba(245,158,11,0.5)]">
+                      <AmazonLogo className="h-4 w-auto text-white" />
                     </div>
                   </div>
                 </div>
@@ -213,19 +213,23 @@ export const HeroV2: React.FC<HeroV2Props> = ({ onOpenGoalModal, onScrollToDemo 
 
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-10 lg:gap-12 text-white/80">
             {[
-              { Icon: GoogleAdsLogo, name: 'Google Ads' },
-              { Icon: MetaLogo, name: 'Meta' },
-              { Icon: GoogleAnalyticsLogo, name: 'Google Analytics' },
-              { Icon: ShopifyLogo, name: 'Shopify' },
-              { Icon: TikTokLogo, name: 'TikTok' },
-              { Icon: LinkedInLogo, name: 'LinkedIn' },
-              { Icon: MicrosoftAdsLogo, name: 'Microsoft Advertising' },
-              { Icon: AmazonLogo, name: 'Amazon Ads' },
-            ].map(({ Icon, name }) => (
+              { Icon: GoogleAdsLogo, name: 'Google Ads', wide: false },
+              { Icon: MetaLogo, name: 'Meta', wide: false },
+              { Icon: GoogleAnalyticsLogo, name: 'Google Analytics', wide: false },
+              { Icon: ShopifyLogo, name: 'Shopify', wide: false },
+              { Icon: TikTokLogo, name: 'TikTok', wide: false },
+              { Icon: LinkedInLogo, name: 'LinkedIn', wide: false },
+              { Icon: MicrosoftAdsLogo, name: 'Microsoft Advertising', wide: false },
+              { Icon: AmazonLogo, name: 'Amazon Ads', wide: true },
+            ].map(({ Icon, name, wide }) => (
               <Icon
                 key={name}
                 monochrome
-                className="w-8 h-8 sm:w-9 sm:h-9 shrink-0 hover:text-white transition-colors duration-300"
+                className={
+                  wide
+                    ? 'h-8 sm:h-9 w-auto shrink-0 hover:text-white transition-colors duration-300'
+                    : 'w-8 h-8 sm:w-9 sm:h-9 shrink-0 hover:text-white transition-colors duration-300'
+                }
               />
             ))}
           </div>
