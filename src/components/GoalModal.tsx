@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, Target, CheckCircle2, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
+import { X, Target, CheckCircle2, ArrowRight, ShieldCheck, Loader2 } from 'lucide-react';
 
 interface GoalModalProps {
   isOpen: boolean;
@@ -73,13 +73,11 @@ export const GoalModal: React.FC<GoalModalProps> = ({ isOpen, onClose, initialGo
       }}
     >
       <div 
-        className={`relative w-full max-w-lg rounded-3xl bg-white border-2 border-purple-200 p-6 sm:p-8 shadow-2xl shadow-purple-900/20 text-left overflow-hidden transition-all duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`relative w-full max-w-lg rounded-2xl bg-white border border-slate-200 p-6 sm:p-8 shadow-lg text-left overflow-hidden transition-all duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-3'
         }`}
       >
         
-        {/* Ambient glow */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-100/60 rounded-full blur-3xl pointer-events-none" />
 
         {/* Close button */}
         <button
@@ -144,9 +142,8 @@ export const GoalModal: React.FC<GoalModalProps> = ({ isOpen, onClose, initialGo
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md shadow-purple-600/20 active:scale-[0.99] transition-all"
+                  className="w-full py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.99] transition-all"
                 >
-                  <Sparkles className="w-4 h-4 text-purple-200" />
                   <span>Build My Plan & Start Free</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
@@ -165,26 +162,21 @@ export const GoalModal: React.FC<GoalModalProps> = ({ isOpen, onClose, initialGo
 
         {step === 'processing' && (
           <div className="py-12 flex flex-col items-center justify-center text-center space-y-4">
-            <div className="w-16 h-16 rounded-2xl bg-purple-50 border-2 border-purple-300 flex items-center justify-center animate-bounce shadow-md">
-              <Zap className="w-8 h-8 text-purple-600" />
-            </div>
+            <Loader2 className="w-8 h-8 text-purple-600 animate-spin" />
             <div className="space-y-1">
               <h4 className="text-lg font-bold text-slate-900">
-                Syncall AI is translating your goal...
+                Setting up your goal…
               </h4>
               <p className="text-xs text-slate-500">
-                Ingesting goal ➜ Calibrating CPA guardrails ➜ Preparing plain-language dashboard
+                Picking the metrics that matter and preparing your dashboard
               </p>
-            </div>
-            <div className="w-48 h-2 bg-slate-100 rounded-full overflow-hidden">
-              <div className="w-full h-full bg-gradient-to-r from-purple-600 to-cyan-500 animate-pulse" />
             </div>
           </div>
         )}
 
         {step === 'success' && (
           <div className="space-y-5 text-center py-4">
-            <div className="w-14 h-14 mx-auto rounded-2xl bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-600 shadow-sm">
+            <div className="w-14 h-14 mx-auto rounded-2xl bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-600">
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
@@ -217,7 +209,7 @@ export const GoalModal: React.FC<GoalModalProps> = ({ isOpen, onClose, initialGo
 
             <button
               onClick={handleReset}
-              className="w-full py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm shadow-md shadow-purple-600/20 transition-colors"
+              className="w-full py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm transition-colors"
             >
               Open Dashboard Workspace
             </button>

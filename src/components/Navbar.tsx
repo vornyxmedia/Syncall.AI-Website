@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Menu, X, ArrowRight, Sparkles, Layers, Target, FileText, Zap, HelpCircle, Store, UserCheck, Users2, ShieldCheck, Sun, Moon } from 'lucide-react';
+import { ChevronDown, Menu, X, ArrowRight, Bot, Layers, Target, FileText, Zap, HelpCircle, Store, UserCheck, Users2, ShieldCheck, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 interface NavbarProps {
@@ -57,10 +57,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
         <div 
           className={`pointer-events-auto w-full rounded-full transition-all duration-500 ease-out px-4 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between ${
             isDarkHeader
-              ? 'bg-[#070814]/75 backdrop-blur-xl border border-white/10 shadow-xl shadow-black/40 text-white'
+              ? 'bg-[#070814]/75 backdrop-blur-xl border border-white/10 text-white'
               : scrolled 
-                ? 'bg-white/95 backdrop-blur-2xl border border-purple-200/90 shadow-xl shadow-purple-950/10 text-slate-900' 
-                : 'bg-white/90 backdrop-blur-xl border border-slate-200/80 shadow-lg shadow-purple-950/5 text-slate-900'
+                ? 'bg-white/95 backdrop-blur-2xl border border-purple-200/90 shadow-lg text-slate-900' 
+                : 'bg-white/90 backdrop-blur-xl border border-slate-200/80 shadow-lg text-slate-900'
           }`}
         >
         
@@ -115,7 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
                     : 'opacity-0 translate-y-2 pointer-events-none invisible'
                 }`}
               >
-                <div className="w-80 rounded-2xl bg-white/95 backdrop-blur-xl border border-purple-100/90 shadow-2xl shadow-purple-950/15 p-3.5 space-y-1">
+                <div className="w-80 rounded-2xl bg-white border border-slate-200 shadow-lg p-3.5 space-y-1">
                   <a 
                     href="#what-you-get" 
                     onClick={() => handleLinkClick('#what-you-get')}
@@ -202,7 +202,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
                     : 'opacity-0 translate-y-2 pointer-events-none invisible'
                 }`}
               >
-                <div className="w-80 rounded-2xl bg-white/95 backdrop-blur-xl border border-purple-100/90 shadow-2xl shadow-purple-950/15 p-3.5 space-y-1">
+                <div className="w-80 rounded-2xl bg-white border border-slate-200 shadow-lg p-3.5 space-y-1">
                   <a 
                     href="#built-for" 
                     onClick={() => handleLinkClick('#built-for')}
@@ -288,7 +288,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
                     : 'opacity-0 translate-y-2 pointer-events-none invisible'
                 }`}
               >
-                <div className="w-80 rounded-2xl bg-white/95 backdrop-blur-xl border border-purple-100/90 shadow-2xl shadow-purple-950/15 p-3.5 space-y-1">
+                <div className="w-80 rounded-2xl bg-white border border-slate-200 shadow-lg p-3.5 space-y-1">
                   <a 
                     href="#why-harder" 
                     onClick={() => handleLinkClick('#why-harder')}
@@ -309,7 +309,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
                     className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-purple-50/70 transition-colors duration-200 group"
                   >
                     <div className="w-8 h-8 rounded-lg bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-700 shrink-0 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300 ease-out">
-                      <Sparkles className="w-4 h-4" />
+                      <Bot className="w-4 h-4" />
                     </div>
                     <div>
                       <span className="text-xs font-bold text-slate-900 block group-hover:text-purple-700 transition-colors duration-200">Meet the AI Engine</span>
@@ -366,8 +366,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
             onClick={onOpenContactModal || onOpenGoalModal}
             className={`min-h-[38px] px-5 sm:px-6 py-2 rounded-full font-semibold text-xs sm:text-sm active:scale-[0.98] transition-all duration-300 ease-out focus-visible:outline-none ${
               isDarkHeader
-                ? 'bg-black/90 hover:bg-black text-white border border-purple-500/40 shadow-[0_0_20px_rgba(168,85,247,0.35)] hover:shadow-[0_0_30px_rgba(168,85,247,0.55)] hover:border-purple-400'
-                : 'bg-purple-600 hover:bg-purple-700 text-white shadow-sm shadow-purple-600/20'
+                ? 'bg-purple-600 hover:bg-purple-700 text-white'
+                : 'bg-purple-600 hover:bg-purple-700 text-white'
             }`}
           >
             Get a demo
@@ -378,8 +378,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
             onClick={toggleTheme}
             className={`flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300 ${
               isDarkHeader
-                ? 'bg-white/10 hover:bg-white/20 text-white border border-white/15 shadow-[0_0_15px_rgba(168,85,247,0.25)]'
-                : 'bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 shadow-sm'
+                ? 'bg-white/10 hover:bg-white/20 text-white border border-white/15'
+                : 'bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200'
             }`}
             title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
             aria-label={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
@@ -408,7 +408,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
 
       {/* Mobile Floating Menu Card with Smooth Transition */}
       <div 
-        className={`lg:hidden pointer-events-auto mt-2.5 w-full max-w-md rounded-3xl bg-white/95 backdrop-blur-2xl border border-purple-100/90 p-5 space-y-4 shadow-2xl shadow-purple-950/15 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top ${
+        className={`lg:hidden pointer-events-auto mt-2.5 w-full max-w-md rounded-2xl bg-white border border-slate-200 p-5 space-y-4 shadow-lg transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top ${
           mobileMenuOpen
             ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto visible'
             : 'opacity-0 scale-95 -translate-y-2 pointer-events-none invisible h-0 p-0 m-0 overflow-hidden border-0'
@@ -477,7 +477,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
               if (onOpenContactModal) onOpenContactModal();
               else onOpenGoalModal();
             }}
-            className="w-full flex items-center justify-center py-2.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm shadow-sm shadow-purple-600/20 active:scale-[0.98] transition-all duration-300 ease-out"
+            className="w-full flex items-center justify-center py-2.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm active:scale-[0.98] transition-all duration-300 ease-out"
           >
             Get a demo
           </button>

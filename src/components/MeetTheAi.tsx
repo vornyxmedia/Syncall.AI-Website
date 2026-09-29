@@ -1,5 +1,4 @@
 import React from 'react';
-import { Sparkles } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 interface MeetTheAiProps {
@@ -55,17 +54,16 @@ export const MeetTheAi: React.FC<MeetTheAiProps> = ({ onOpenGoalModal }) => {
               onClick={onOpenGoalModal}
               className={
                 isV2
-                  ? 'px-8 py-3.5 rounded-full bg-black/90 hover:bg-black text-white font-bold text-sm sm:text-base border border-white/20 shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:shadow-[0_0_35px_rgba(168,85,247,0.6)] active:scale-[0.98] transition-all duration-300 cursor-pointer'
-                  : 'px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm sm:text-base shadow-xl shadow-purple-600/30 border border-purple-400/30 active:scale-[0.98] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer'
+                  ? 'px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm sm:text-base active:scale-[0.98] transition-all duration-300 cursor-pointer'
+                  : 'px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm sm:text-base active:scale-[0.98] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer'
               }
             >
               Get early access
             </button>
             <button
               onClick={scrollToResults}
-              className="px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-sm sm:text-base backdrop-blur-md border border-white/20 active:scale-[0.98] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer flex items-center gap-2"
+              className="px-7 py-3.5 rounded-full hover:bg-white/10 text-white font-semibold text-sm sm:text-base border border-white/20 active:scale-[0.98] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer flex items-center gap-2"
             >
-              <Sparkles className="w-4 h-4 text-cyan-300" />
               <span>See customer results</span>
             </button>
           </div>

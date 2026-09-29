@@ -52,7 +52,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
       }}
     >
       <div 
-        className={`relative w-full max-w-md rounded-3xl bg-white border-2 border-purple-200 p-6 sm:p-8 shadow-2xl shadow-purple-900/20 text-left overflow-hidden transition-all duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`relative w-full max-w-md rounded-2xl bg-white border border-slate-200 p-6 sm:p-8 shadow-lg text-left overflow-hidden transition-all duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-3'
         }`}
       >
@@ -116,7 +116,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
             <button
               type="submit"
-              className="w-full mt-2 py-3 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-purple-600/20 active:scale-[0.99] transition-all"
+              className="w-full mt-2 py-3 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 active:scale-[0.99] transition-all"
             >
               <Send className="w-4 h-4" />
               <span>Send Message</span>
@@ -124,7 +124,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
           </form>
         ) : (
           <div className="py-8 text-center space-y-3">
-            <div className="w-12 h-12 mx-auto rounded-2xl bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-600 shadow-sm">
+            <div className="w-12 h-12 mx-auto rounded-2xl bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-600">
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <h4 className="text-xl font-bold text-slate-900">Message Received!</h4>

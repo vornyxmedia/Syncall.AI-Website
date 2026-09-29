@@ -1,123 +1,143 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Check, Loader2, ArrowRight } from 'lucide-react';
-import { GoogleAdsLogo, MetaLogo, ShopifyLogo, TikTokLogo, GoogleAnalyticsLogo, LinkedInLogo, MicrosoftAdsLogo, XLogo, AmazonLogo } from './BrandLogos';
 import { useTheme } from '../context/ThemeContext';
 
 interface ThreeKindsOfScaleProps {
   onOpenContactModal?: () => void;
 }
 
-interface StreamItem {
-  icon?: React.ReactNode;
-  symbol?: string;
-  bg: string;
-  text: string;
-}
-
 // 5 Portfolio Brands configuration — static, defined once at module scope
 // so it isn't rebuilt on every tick of the sync-status animation below.
 const PORTFOLIO_BRANDS = [
-  {
-    id: 'autofinder',
-    name: 'AutoFinder',
-    icon: '▲',
-    iconBg: 'bg-orange-500',
-    iconColor: 'text-white',
-    loadingStatus: 'Syncing budget...',
-    syncedStatus: 'Budget synced',
-  },
-  {
-    id: 'wave-capital',
-    name: 'Wave Capital',
-    icon: '🌊',
-    iconBg: 'bg-cyan-500',
-    iconColor: 'text-white',
-    loadingStatus: 'Preparing analysis...',
-    syncedStatus: 'Analysis ready',
-  },
-  {
-    id: 'fluid',
-    name: 'Fluid',
-    icon: 'F',
-    iconBg: 'bg-blue-500',
-    iconColor: 'text-white',
-    loadingStatus: 'Collecting data...',
-    syncedStatus: 'Data collected',
-  },
-  {
-    id: 'rudder-media',
-    name: 'Rudder Media',
-    icon: '◎',
-    iconBg: 'bg-purple-400',
-    iconColor: 'text-purple-950',
-    loadingStatus: 'Syncing accounts...',
-    syncedStatus: 'Budget synced',
-  },
-  {
-    id: 'sherway-nursery',
-    name: 'Sherway Nursery',
-    icon: '🌲',
-    iconBg: 'bg-emerald-700',
-    iconColor: 'text-white',
-    loadingStatus: 'Building report...',
-    syncedStatus: 'Report ready',
-  },
+  { id: 'autofinder', name: 'AutoFinder', loadingStatus: 'Syncing budget', syncedStatus: 'Budget synced' },
+  { id: 'wave-capital', name: 'Wave Capital', loadingStatus: 'Preparing analysis', syncedStatus: 'Analysis ready' },
+  { id: 'fluid', name: 'Fluid', loadingStatus: 'Collecting data', syncedStatus: 'Data collected' },
+  { id: 'rudder-media', name: 'Rudder Media', loadingStatus: 'Syncing accounts', syncedStatus: 'Accounts synced' },
+  { id: 'sherway-nursery', name: 'Sherway Nursery', loadingStatus: 'Building report', syncedStatus: 'Report ready' },
 ] as const;
 
-// Single cyclic sequence (5 logos, each followed by 3 placeholder marks) that the
-// 5 scrolling columns below are sliced from, offset by 4 items each — this is
-// what keeps a matching icon lined up at the seam between adjacent columns.
-// To add another brand, drop it in here; no column array needs touching.
-const PLATFORM_STREAM: StreamItem[] = [
-  { icon: <GoogleAdsLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-slate-700' },
-  { icon: <LinkedInLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-blue-700' },
-  { symbol: '★', bg: 'bg-white', text: 'text-amber-500' },
-  { symbol: '◇', bg: 'bg-white/80', text: 'text-slate-400' },
-  { icon: <MetaLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-blue-600' },
-  { symbol: '✦', bg: 'bg-white', text: 'text-slate-500' },
-  { symbol: '◆', bg: 'bg-white', text: 'text-indigo-600' },
-  { symbol: '○', bg: 'bg-white/80', text: 'text-slate-400' },
-  { icon: <TikTokLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-slate-900' },
-  { icon: <MicrosoftAdsLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-teal-700' },
-  { symbol: '▲', bg: 'bg-white', text: 'text-orange-500' },
-  { symbol: '□', bg: 'bg-white/80', text: 'text-slate-400' },
-  { icon: <ShopifyLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-emerald-600' },
-  { symbol: '◈', bg: 'bg-white', text: 'text-slate-500' },
-  { symbol: '✿', bg: 'bg-white', text: 'text-teal-600' },
-  { symbol: '△', bg: 'bg-white/80', text: 'text-slate-400' },
-  { icon: <GoogleAnalyticsLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-amber-600' },
-  { icon: <XLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-slate-900' },
-  { icon: <AmazonLogo className="h-2.5 w-auto" />, bg: 'bg-white', text: 'text-orange-600' },
-  { symbol: '☆', bg: 'bg-white/80', text: 'text-slate-400' },
+// Regional roll-up shown on the multi-location card
+const LOCATION_REGIONS = [
+  { region: 'Northeast', locations: 312, leads: '4,820', cpl: '$21' },
+  { region: 'Southeast', locations: 287, leads: '4,105', cpl: '$19' },
+  { region: 'Midwest', locations: 341, leads: '3,960', cpl: '$24' },
+  { region: 'West', locations: 308, leads: '5,230', cpl: '$18' },
+] as const;
+
+type AccountStatus = 'healthy' | 'fixed' | 'flagged';
+
+const SCAN_COLS = 12;
+const SCAN_TOTAL = SCAN_COLS * 10;
+const SCAN_STEP_MS = 45;
+const SCAN_HOLD_MS = 3200;
+
+// Deterministic spread of outcomes so the grid looks organic but never jumps
+// between renders: roughly 1 in 12 accounts gets auto-fixed, 1 in 12 flagged.
+const accountStatus = (i: number): AccountStatus => {
+  const h = (i * 7919 + 13) % 23;
+  if (h === 0 || h === 11) return 'flagged';
+  if (h === 3 || h === 17) return 'fixed';
+  return 'healthy';
+};
+
+const ACCOUNT_STATUSES: AccountStatus[] = Array.from({ length: SCAN_TOTAL }, (_, i) => accountStatus(i));
+
+const FIXED_EVENTS = [
+  'Meta ad set overspending by 18%, paused',
+  'Broken tracking link on Google Ads, repaired',
+  'TikTok budget ran out by 2pm, rebalanced',
+  'Weekly client report sent',
 ];
 
-const STREAM_COLUMN_COUNT = 5;
-const STREAM_COLUMN_SIZE = 6;
-const STREAM_COLUMN_STEP = 4;
+const FLAGGED_EVENTS = [
+  'Shopify sales down 40% since Tuesday',
+  'LinkedIn cost per lead jumped to $142',
+  'Checkout pixel stopped firing',
+];
 
-// Each column is a 6-item window into PLATFORM_STREAM, offset by 4; the list is
-// doubled up front so the scroll animation can loop seamlessly via CSS alone.
-const STREAM_COLUMNS: StreamItem[][] = Array.from({ length: STREAM_COLUMN_COUNT }, (_, colIdx) => {
-  const window = Array.from({ length: STREAM_COLUMN_SIZE }, (_, i) =>
-    PLATFORM_STREAM[(colIdx * STREAM_COLUMN_STEP + i) % PLATFORM_STREAM.length]
-  );
-  return [...window, ...window];
-});
+const scanEventFor = (i: number) => {
+  const status = ACCOUNT_STATUSES[i];
+  const pool = status === 'flagged' ? FLAGGED_EVENTS : FIXED_EVENTS;
+  return { status, client: `Client #${String(i + 1).padStart(3, '0')}`, text: pool[i % pool.length] };
+};
 
-const StreamColumn: React.FC<{ items: StreamItem[]; isUp: boolean }> = ({ items, isUp }) => (
-  <div className="flex flex-col gap-2.5 overflow-hidden">
-    <div className={`flex flex-col gap-2.5 ${isUp ? 'animate-vertical-up' : 'animate-vertical-down'}`}>
-      {items.map((item, idx) => (
-        <div
-          key={idx}
-          className={`w-9 h-9 sm:w-10 sm:h-10 rounded-2xl ${item.bg} border border-slate-200/80 shadow-xs flex items-center justify-center text-xs font-bold ${item.text} shrink-0`}
-        >
-          {item.icon ?? item.symbol}
-        </div>
-      ))}
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+const AccountHealthScan: React.FC<{ isDark: boolean }> = ({ isDark }) => {
+  // Number of accounts the agent has checked so far in the current sweep
+  const [scanned, setScanned] = useState(() => (prefersReducedMotion() ? SCAN_TOTAL : 0));
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    const timer = scanned < SCAN_TOTAL
+      ? setTimeout(() => setScanned((n) => n + 1), SCAN_STEP_MS)
+      : setTimeout(() => setScanned(0), SCAN_HOLD_MS);
+    return () => clearTimeout(timer);
+  }, [scanned]);
+
+  const counts = useMemo(() => {
+    const c = { healthy: 0, fixed: 0, flagged: 0 };
+    for (let i = 0; i < scanned; i++) c[ACCOUNT_STATUSES[i]]++;
+    return c;
+  }, [scanned]);
+
+  // Most recent non-healthy account the sweep has passed, shown in the ticker
+  const latestEvent = useMemo(() => {
+    for (let i = scanned - 1; i >= 0; i--) {
+      if (ACCOUNT_STATUSES[i] !== 'healthy') return { index: i, ...scanEventFor(i) };
+    }
+    return null;
+  }, [scanned]);
+
+  const cellClass = (i: number) => {
+    if (i >= scanned) return isDark ? 'bg-white/[0.05]' : 'bg-slate-200/70';
+    const status = ACCOUNT_STATUSES[i];
+    if (status === 'flagged') return 'bg-amber-400';
+    if (status === 'fixed') return 'bg-purple-500';
+    return isDark ? 'bg-emerald-400/35' : 'bg-emerald-500/35';
+  };
+
+  const muted = isDark ? 'text-slate-400' : 'text-slate-500';
+
+  return (
+    <div className={`rounded-xl p-4 border space-y-3 ${
+      isDark ? 'bg-[#0b0d20] border-white/10' : 'bg-white border-slate-200'
+    }`}>
+      <div className={`flex items-baseline justify-between text-xs ${muted}`}>
+        <span>Checked today</span>
+        <span className="tabular-nums">
+          <span className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>{scanned}</span> / {SCAN_TOTAL}
+        </span>
+      </div>
+
+      {/* One cell per client account */}
+      <div className="grid gap-[3px]" style={{ gridTemplateColumns: `repeat(${SCAN_COLS}, minmax(0, 1fr))` }} aria-hidden="true">
+        {ACCOUNT_STATUSES.map((_, i) => (
+          <div key={i} className={`aspect-square rounded-[3px] transition-colors duration-200 ${cellClass(i)}`} />
+        ))}
+      </div>
+
+      <div className={`flex items-center gap-4 text-[11px] ${muted}`}>
+        <span className="flex items-center gap-1.5"><span className={`w-2 h-2 rounded-[2px] ${isDark ? 'bg-emerald-400/35' : 'bg-emerald-500/35'}`} />{counts.healthy} fine</span>
+        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-[2px] bg-purple-500" />{counts.fixed} fixed</span>
+        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-[2px] bg-amber-400" />{counts.flagged} for you</span>
+      </div>
+
+      <div className={`pt-3 border-t text-xs truncate ${isDark ? 'border-white/10 text-slate-300' : 'border-slate-200 text-slate-600'}`}>
+        {latestEvent ? (
+          <>
+            <span className={`font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>{latestEvent.client}</span>
+            <span className={muted}> — </span>
+            {latestEvent.text}
+          </>
+        ) : (
+          <span className={muted}>Checking pacing, tracking and reports</span>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export const ThreeKindsOfScale: React.FC<ThreeKindsOfScaleProps> = ({ onOpenContactModal }) => {
   const { isDuskMode } = useTheme();
@@ -153,23 +173,18 @@ export const ThreeKindsOfScale: React.FC<ThreeKindsOfScaleProps> = ({ onOpenCont
   const cardSurfaceClass = useMemo(
     () =>
       isV2
-        ? 'bg-[#0e1126] border-white/10 text-white shadow-[0_0_30px_rgba(0,0,0,0.5)]'
-        : 'bg-[#F3F6FD] border-blue-100/70 shadow-lg shadow-purple-950/5',
+        ? 'bg-[#0e1126] border-white/10 text-white'
+        : 'bg-slate-50 border-slate-200',
     [isV2]
   );
 
   return (
     <section id="multi-account-scale" className={`relative py-14 sm:py-16 lg:py-[100px] overflow-hidden transition-colors duration-500 ${isV2 ? 'bg-[#070814] text-white' : 'bg-white text-slate-900'}`}>
-      {/* Background ambient lighting */}
-      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full blur-[160px] pointer-events-none ${isV2 ? 'bg-purple-900/20' : 'bg-purple-100/40'}`} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-16 sm:mb-20">
-          <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-purple-400">
-            BUILT FOR MULTI-ACCOUNT SCALE
-          </p>
           <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] ${isV2 ? 'text-white' : 'text-slate-900'}`}>
             Three Kinds of Scale. One Platform.
           </h2>
@@ -178,12 +193,9 @@ export const ThreeKindsOfScale: React.FC<ThreeKindsOfScaleProps> = ({ onOpenCont
         {/* 3 Scale Cards Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch mb-14 sm:mb-16">
           
-          {/* COLUMN 1: AGENCIES (100s of Accounts - Flowing Multi-Account Conveyor) */}
-          <div className={`rounded-[32px] p-7 sm:p-9 flex flex-col justify-between relative overflow-hidden transition-all duration-300 border ${cardSurfaceClass}`}>
+          {/* COLUMN 1: AGENCIES */}
+          <div className={`rounded-2xl p-7 sm:p-9 flex flex-col justify-between relative overflow-hidden transition-all duration-300 border ${cardSurfaceClass}`}>
             <div>
-              <p className={`text-xs font-bold uppercase tracking-wider mb-2 ${isV2 ? 'text-purple-300' : 'text-purple-600'}`}>
-                AGENCIES
-              </p>
               <h3 className={`text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug mb-3 ${isV2 ? 'text-white' : 'text-slate-900'}`}>
                 100s of Accounts
               </h3>
@@ -192,37 +204,14 @@ export const ThreeKindsOfScale: React.FC<ThreeKindsOfScaleProps> = ({ onOpenCont
               </p>
             </div>
 
-            {/* Visual: Smooth Infinite Vertical Account Streams */}
-            <div className={`relative h-56 sm:h-64 overflow-hidden rounded-2xl p-3 border ${
-              isV2 ? 'bg-[#131738]/60 border-white/10' : 'bg-white/40 border-blue-100/60'
-            }`}>
-              {/* Top & Bottom Gradient Masks for seamless streaming */}
-              <div className={`absolute inset-x-0 top-0 h-10 z-10 pointer-events-none bg-gradient-to-b ${
-                isV2 ? 'from-[#0e1126] to-transparent' : 'from-[#F3F6FD] to-transparent'
-              }`} />
-              <div className={`absolute inset-x-0 bottom-0 h-10 z-10 pointer-events-none bg-gradient-to-t ${
-                isV2 ? 'from-[#0e1126] to-transparent' : 'from-[#F3F6FD] to-transparent'
-              }`} />
-
-              <div className="grid grid-cols-5 gap-2 sm:gap-2.5 h-full justify-items-center">
-                {STREAM_COLUMNS.map((items, idx) => (
-                  <StreamColumn key={idx} items={items} isUp={idx % 2 === 0} />
-                ))}
-              </div>
-            </div>
+            {/* Visual: Agent health sweep across every client account */}
+            <AccountHealthScan isDark={isV2} />
 
           </div>
 
-          {/* COLUMN 2: PORTFOLIO COMPANIES (Dozens of Brands - Live Real-Time Sync Pipeline) */}
-          <div className="rounded-[32px] bg-gradient-to-b from-[#6D28D9] via-[#7C3AED] to-[#4F46E5] text-white p-7 sm:p-9 flex flex-col justify-between shadow-2xl shadow-purple-900/25 relative overflow-hidden">
-            
-            {/* Ambient inner glow */}
-            <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
-
+          {/* COLUMN 2: PORTFOLIO COMPANIES */}
+          <div className="rounded-2xl bg-gradient-to-b from-[#6D28D9] via-[#7C3AED] to-[#4F46E5] text-white p-7 sm:p-9 flex flex-col justify-between relative overflow-hidden">
             <div className="relative z-10">
-              <p className="text-xs font-bold uppercase tracking-wider text-purple-200 mb-2">
-                PORTFOLIO COMPANIES
-              </p>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug mb-3">
                 Dozens of Brands
               </h3>
@@ -231,43 +220,39 @@ export const ThreeKindsOfScale: React.FC<ThreeKindsOfScaleProps> = ({ onOpenCont
               </p>
             </div>
 
-            {/* Visual: Live Animated Brand Account Sync Pipeline */}
-            <div className="space-y-2.5 relative z-10">
+            {/* Visual: brands syncing one by one */}
+            <div className="rounded-xl bg-white/[0.07] divide-y divide-white/10 relative z-10">
               {PORTFOLIO_BRANDS.map((brand, idx) => {
                 const isTicked = idx < tickedCount;
                 return (
                   <div 
                     key={brand.id}
-                    className="p-3 sm:p-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-between shadow-sm transition-all duration-300"
+                    className="px-4 py-3 flex items-center justify-between"
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-xl ${brand.iconBg} flex items-center justify-center font-bold text-xs ${brand.iconColor} shadow-sm shrink-0`}>
-                        {brand.icon}
+                      <div className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center font-bold text-xs text-white shrink-0">
+                        {brand.name.charAt(0)}
                       </div>
                       <div>
                         <h4 className="text-xs font-bold text-white leading-tight">
                           {brand.name}
                         </h4>
                         {isTicked ? (
-                          <span className="text-[10px] text-emerald-300 font-medium flex items-center gap-1 pt-0.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                          <span className="text-[11px] text-purple-100 block pt-0.5">
                             {brand.syncedStatus}
                           </span>
                         ) : (
-                          <span className="text-[10px] text-amber-200 font-medium flex items-center gap-1 pt-0.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-300 animate-pulse" />
-                            {brand.loadingStatus}
+                          <span className="text-[11px] text-purple-200/70 block pt-0.5">
+                            {brand.loadingStatus}…
                           </span>
                         )}
                       </div>
                     </div>
 
                     {isTicked ? (
-                      <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center transition-all duration-300">
-                        <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                      </div>
+                      <Check className="w-4 h-4 text-emerald-300 shrink-0" />
                     ) : (
-                      <Loader2 className="w-4 h-4 text-white/80 animate-spin shrink-0" />
+                      <Loader2 className="w-4 h-4 text-white/60 animate-spin shrink-0" />
                     )}
                   </div>
                 );
@@ -276,12 +261,9 @@ export const ThreeKindsOfScale: React.FC<ThreeKindsOfScaleProps> = ({ onOpenCont
 
           </div>
 
-          {/* COLUMN 3: MULTI-LOCATION BRANDS (1,000s of Locations - Radiating Network & Orbiting Nodes) */}
-          <div className={`rounded-[32px] p-7 sm:p-9 flex flex-col justify-between relative overflow-hidden transition-all duration-300 border ${cardSurfaceClass}`}>
+          {/* COLUMN 3: MULTI-LOCATION BRANDS */}
+          <div className={`rounded-2xl p-7 sm:p-9 flex flex-col justify-between relative overflow-hidden transition-all duration-300 border ${cardSurfaceClass}`}>
             <div>
-              <p className={`text-xs font-bold uppercase tracking-wider mb-2 ${isV2 ? 'text-purple-300' : 'text-purple-600'}`}>
-                MULTI-LOCATION BRANDS
-              </p>
               <h3 className={`text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug mb-3 ${isV2 ? 'text-white' : 'text-slate-900'}`}>
                 1,000s of Locations
               </h3>
@@ -290,57 +272,28 @@ export const ThreeKindsOfScale: React.FC<ThreeKindsOfScaleProps> = ({ onOpenCont
               </p>
             </div>
 
-            {/* Visual: Radar Waves, Orbiting Nodes & Levitation Hub */}
-            <div className="h-64 flex items-center justify-center relative overflow-hidden">
-              
-              {/* Radiating radar wave pulses from central hub */}
-              <div className="absolute w-36 h-36 rounded-full border-2 border-purple-400/40 animate-radar-1 pointer-events-none" />
-              <div className="absolute w-36 h-36 rounded-full border-2 border-indigo-400/35 animate-radar-2 pointer-events-none" />
-              <div className="absolute w-36 h-36 rounded-full border-2 border-cyan-400/30 animate-radar-3 pointer-events-none" />
-
-              {/* Outer Rotating Dashed Orbital Ring with Satellites */}
-              <div className="absolute w-60 h-60 rounded-full border border-dashed border-indigo-300/50 animate-orbit-slow pointer-events-none flex items-center justify-between p-1">
-                <div className="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-sm shadow-purple-500/50 -translate-x-1" />
-                <div className="w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-sm shadow-indigo-500/50 translate-x-1" />
+            {/* Visual: every location rolled up by region */}
+            <div className={`rounded-xl border text-xs ${isV2 ? 'bg-[#0b0d20] border-white/10' : 'bg-white border-slate-200'}`}>
+              <div className={`grid grid-cols-4 gap-2 px-4 py-2.5 border-b ${isV2 ? 'border-white/10 text-slate-400' : 'border-slate-200 text-slate-500'}`}>
+                <span>Region</span>
+                <span className="text-right">Locations</span>
+                <span className="text-right">Leads</span>
+                <span className="text-right">Cost / lead</span>
               </div>
-
-              {/* Inner Reverse Rotating Orbital Ring */}
-              <div className="absolute w-44 h-44 rounded-full border border-purple-200/60 animate-orbit-reverse pointer-events-none flex items-center justify-between p-1">
-                <div className="w-2 h-2 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400/50 -translate-x-1" />
-                <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400/50 translate-x-1" />
-              </div>
-
-              {/* Floating Mini Location Beacon Badges */}
-              <div className={`absolute top-3 left-3 sm:left-5 px-2.5 py-1 rounded-full backdrop-blur-md border shadow-sm text-[10px] font-bold flex items-center gap-1.5 animate-float-gentle z-20 ${
-                isV2 ? 'bg-[#131738]/90 border-white/15 text-white' : 'bg-white/95 border-slate-200/80 text-slate-700'
-              }`}>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Store #104</span>
-              </div>
-
-              <div className={`absolute bottom-3 right-3 sm:right-5 px-2.5 py-1 rounded-full backdrop-blur-md border shadow-sm text-[10px] font-bold flex items-center gap-1.5 animate-float-gentle [animation-delay:2s] z-20 ${
-                isV2 ? 'bg-[#131738]/90 border-white/15 text-white' : 'bg-white/95 border-slate-200/80 text-slate-700'
-              }`}>
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
-                <span>Store #389</span>
-              </div>
-
-              <div className={`absolute top-4 right-4 px-2.5 py-1 rounded-full backdrop-blur-md border shadow-sm text-[10px] font-bold flex items-center gap-1.5 animate-float-gentle [animation-delay:3.5s] z-20 ${
-                isV2 ? 'bg-[#131738]/90 border-white/15 text-white' : 'bg-white/95 border-slate-200/80 text-slate-700'
-              }`}>
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
-                <span>Store #842</span>
-              </div>
-
-              {/* Central 3D Brand Hub (Gently levitates) */}
-              <div className={`relative w-32 h-32 sm:w-36 sm:h-36 rounded-[36px] border flex items-center justify-center p-5 sm:p-6 z-10 animate-float-gentle ${
-                isV2 ? 'bg-[#181d45] border-white/15 shadow-[0_0_40px_rgba(0,0,0,0.8)]' : 'bg-white border-slate-200/90 shadow-2xl shadow-purple-950/15'
-              }`}>
-                <div className="w-full h-full rounded-2xl bg-gradient-to-tr from-orange-500 via-amber-500 to-orange-400 flex items-center justify-center text-white shadow-lg shadow-orange-500/30">
-                  <span className="text-4xl sm:text-5xl font-black tracking-tighter">▲</span>
+              {LOCATION_REGIONS.map((r) => (
+                <div key={r.region} className={`grid grid-cols-4 gap-2 px-4 py-2.5 tabular-nums ${isV2 ? 'text-slate-300' : 'text-slate-700'}`}>
+                  <span className={`font-medium ${isV2 ? 'text-white' : 'text-slate-900'}`}>{r.region}</span>
+                  <span className="text-right">{r.locations}</span>
+                  <span className="text-right">{r.leads}</span>
+                  <span className="text-right">{r.cpl}</span>
                 </div>
+              ))}
+              <div className={`grid grid-cols-4 gap-2 px-4 py-2.5 border-t font-semibold tabular-nums ${isV2 ? 'border-white/10 text-white' : 'border-slate-200 text-slate-900'}`}>
+                <span>Brand total</span>
+                <span className="text-right">1,248</span>
+                <span className="text-right">18,115</span>
+                <span className="text-right">$20</span>
               </div>
-
             </div>
 
           </div>
@@ -351,11 +304,7 @@ export const ThreeKindsOfScale: React.FC<ThreeKindsOfScaleProps> = ({ onOpenCont
         <div className="text-center">
           <button
             onClick={onOpenContactModal}
-            className={
-              isV2
-                ? 'px-10 py-4 rounded-full bg-black/90 hover:bg-black text-white font-bold text-base border border-white/20 shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:shadow-[0_0_35px_rgba(168,85,247,0.6)] active:scale-[0.98] transition-all duration-300 cursor-pointer inline-flex items-center gap-2'
-                : 'px-10 py-4 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-base shadow-xl shadow-purple-600/25 active:scale-[0.98] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer inline-flex items-center gap-2'
-            }
+            className="px-10 py-4 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-base active:scale-[0.98] transition-all duration-300 cursor-pointer inline-flex items-center gap-2"
           >
             <span>Get a Demo</span>
             <ArrowRight className="w-4 h-4" />

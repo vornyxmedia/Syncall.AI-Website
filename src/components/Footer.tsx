@@ -19,8 +19,6 @@ export const Footer: React.FC<FooterProps> = () => {
     <footer className={`relative text-slate-400 pt-16 sm:pt-20 pb-12 overflow-hidden transition-colors duration-500 ${
       isV2 ? 'bg-[#070814] border-t border-white/10' : 'bg-[#0b0f1f]'
     }`}>
-      {/* Subtle background ambient glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[300px] bg-purple-900/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -170,15 +168,16 @@ export const Footer: React.FC<FooterProps> = () => {
               
               <div className="space-y-1">
                 <span className="text-slate-500 font-medium block">Support</span>
-                <a href="mailto:support@syncall.ai" className="hover:text-white transition-colors block">support@syncall.ai</a>
+                <a href="mailto:info@syncall.ai" className="hover:text-white transition-colors block">info@syncall.ai</a>
                 <span className="text-slate-400 block">1-855-646-5222</span>
               </div>
 
               <div className="space-y-1">
                 <span className="text-slate-500 font-medium block">Address</span>
                 <p className="text-slate-400 leading-relaxed">
-                  2810 N Church St, #57505 <br />
-                  Wilmington, DE 19802-4447
+                  New T - 13/14, Shukkar Bazar, <br />
+                  Uttam Nagar, <br />
+                  <span className="whitespace-nowrap">New Delhi - 110059</span>
                 </p>
               </div>
 
@@ -194,7 +193,11 @@ export const Footer: React.FC<FooterProps> = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} Syncall. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} Syncall. All rights reserved.
+            <span className="mx-2 text-slate-700">·</span>
+            Powered by <span className="text-slate-300 font-medium">Vornyx Media</span>
+          </p>
 
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Target, TrendingDown, TrendingUp, ShieldCheck, Check, Sparkles, ArrowRight, Layers, Cpu, Zap, CheckCircle2 } from 'lucide-react';
+import { TrendingDown, TrendingUp, ShieldCheck, Check, ArrowRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 interface HowItWorksProps {
@@ -23,12 +23,10 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
   return (
     <section id="how-it-works" className={`relative py-14 sm:py-16 lg:py-[100px] overflow-hidden transition-colors duration-500 ${isV2 ? 'bg-[#070814] text-white' : 'bg-white text-slate-900'}`}>
       
-      {/* Ambient background glow */}
-      <div className={`absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full blur-[160px] pointer-events-none ${isV2 ? 'bg-purple-900/20' : 'bg-purple-100/40'}`} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Heading (Matching Reference: media_1789753001583.png) */}
+        {/* Section Heading */}
         <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
           <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight ${isV2 ? 'text-white' : 'text-slate-900'}`}>
             How it works
@@ -42,21 +40,18 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
             
             {/* Left Visual: Interactive Goal Selector Canvas */}
             <div className="lg:col-span-7">
-              <div className={`relative rounded-[36px] p-6 sm:p-12 flex items-center justify-center overflow-hidden transition-all ${
+              <div className={`relative rounded-2xl p-6 sm:p-12 flex items-center justify-center overflow-hidden transition-all ${
                 isV2 
-                  ? 'bg-white/[0.03] border border-white/10 shadow-2xl shadow-black/60' 
-                  : 'bg-gradient-to-br from-indigo-50/90 via-purple-50/60 to-white/80 border border-purple-100/90 shadow-xl shadow-purple-950/5'
+                  ? 'bg-white/[0.03] border border-white/10' 
+                  : 'bg-slate-50 border border-slate-200'
               }`}>
                 
-                {/* Background ambient lighting inside canvas */}
-                <div className={`absolute -top-10 -left-10 w-48 h-48 rounded-full blur-3xl pointer-events-none ${isV2 ? 'bg-purple-600/30' : 'bg-purple-200/50'}`} />
-                <div className={`absolute -bottom-10 -right-10 w-48 h-48 rounded-full blur-3xl pointer-events-none ${isV2 ? 'bg-cyan-600/20' : 'bg-cyan-200/40'}`} />
 
                 {/* Inner Device / Goal Card */}
-                <div className={`relative w-full max-w-[340px] rounded-3xl p-6 space-y-4 transition-all ${
+                <div className={`relative w-full max-w-[340px] rounded-2xl p-6 space-y-4 transition-all ${
                   isV2 
-                    ? 'bg-[#0c0e22] border border-white/15 text-white shadow-2xl shadow-purple-950/20' 
-                    : 'bg-white border border-purple-100 text-slate-900 shadow-2xl shadow-purple-950/10'
+                    ? 'bg-[#0c0e22] border border-white/15 text-white' 
+                    : 'bg-white border border-purple-100 text-slate-900'
                 }`}>
                   
                   {/* Brand Header */}
@@ -152,7 +147,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
               <span className={`text-xs font-bold uppercase tracking-widest block ${isV2 ? 'text-purple-400' : 'text-purple-600'}`}>
                 STEP 1
               </span>
-              
+
               <h3 className={`text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight ${isV2 ? 'text-white' : 'text-slate-900'}`}>
                 Set your goal
               </h3>
@@ -164,7 +159,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
               <div className="pt-4">
                 <button
                   onClick={() => onOpenGoalModal ? onOpenGoalModal() : null}
-                  className="px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm shadow-lg shadow-purple-600/25 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 flex items-center gap-2 cursor-pointer"
+                  className="px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 flex items-center gap-2 cursor-pointer"
                 >
                   <span>Set your goal</span>
                   <ArrowRight className="w-4 h-4" />
@@ -175,18 +170,14 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
           </div>
 
           {/* CARD 2: STEP 2 - Let the AI read the data (Full-Width Banner Card Layout) */}
-          <div className="w-full rounded-[36px] overflow-hidden p-8 sm:p-12 lg:p-16 relative text-white shadow-2xl bg-gradient-to-r from-purple-800 via-purple-700 to-indigo-700">
-            
-            {/* Corner Watermark Diamonds (Matching Reference: media_1789753001583.png) */}
-            <div className="absolute -bottom-10 -left-10 pointer-events-none opacity-20">
-              <div className="relative">
-                <div className="w-48 h-48 rounded-[36px] rotate-[45deg] bg-white border border-white/40" />
-                <div className="absolute -top-6 -right-6 w-28 h-28 rounded-[24px] rotate-[45deg] bg-white/60 -z-10" />
-              </div>
-            </div>
-
-            {/* Background Ambient Aura */}
-            <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-400/20 rounded-full blur-[120px] pointer-events-none" />
+          <div className="w-full rounded-2xl overflow-hidden p-8 sm:p-12 lg:p-16 relative text-white bg-gradient-to-r from-[#6b21a8] via-[#7e22ce] to-[#4338ca]">
+            {/* Corner diamond watermark, partly cropped by the card edges */}
+            <img
+              src={`${import.meta.env.BASE_URL}step2-diamonds.png`}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none select-none absolute -left-10 -bottom-14 w-[220px] h-auto opacity-20"
+            />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
               
@@ -195,7 +186,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
                 <span className="text-xs font-bold uppercase tracking-widest text-purple-200 block">
                   STEP 2
                 </span>
-                
+
                 <h3 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
                   Let the AI read <br className="hidden sm:inline" /> the data
                 </h3>
@@ -231,7 +222,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
                 <div className="pt-4">
                   <button
                     onClick={() => onOpenGoalModal ? onOpenGoalModal() : null}
-                    className="px-8 py-3.5 rounded-full bg-white text-purple-700 hover:bg-purple-50 font-bold text-sm shadow-xl active:scale-95 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center gap-2 cursor-pointer"
+                    className="px-8 py-3.5 rounded-full bg-white text-purple-700 hover:bg-purple-50 font-bold text-sm active:scale-95 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center gap-2 cursor-pointer"
                   >
                     <span>Connect your accounts</span>
                     <ArrowRight className="w-4 h-4 text-purple-700" />
@@ -241,26 +232,24 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
 
               {/* Right Column: Mini Graphic Canvas */}
               <div className="lg:col-span-5 flex justify-center">
-                <div className="w-full max-w-[340px] rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 p-6 space-y-4 shadow-2xl">
+                <div className="w-full max-w-[340px] rounded-2xl bg-white/10 border border-white/20 p-6 space-y-4">
                   <div className="flex items-center justify-between pb-3 border-b border-white/15 text-white text-xs font-bold">
-                    <span>Active Diagnostics</span>
-                    <span className="flex items-center gap-1 text-emerald-300">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Live
-                    </span>
+                    <span>What Syncall found</span>
+                    <span className="text-purple-200 font-medium">This week</span>
                   </div>
 
                   <div className="space-y-2.5">
-                    <div className="p-3 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-between">
+                    <div className="p-3 rounded-xl bg-white/[0.06] flex items-center justify-between">
                       <span className="text-xs font-semibold text-white">Meta Ad Fatigue</span>
                       <span className="text-xs font-bold text-rose-300">-28% CPA</span>
                     </div>
 
-                    <div className="p-3 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-between">
+                    <div className="p-3 rounded-xl bg-white/[0.06] flex items-center justify-between">
                       <span className="text-xs font-semibold text-white">Google Search Waste</span>
                       <span className="text-xs font-bold text-amber-300">-$380/wk</span>
                     </div>
 
-                    <div className="p-3 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-between">
+                    <div className="p-3 rounded-xl bg-white/[0.06] flex items-center justify-between">
                       <span className="text-xs font-semibold text-white">Shopify Retargeting</span>
                       <span className="text-xs font-bold text-cyan-300">+14 Carts</span>
                     </div>
@@ -280,7 +269,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
               <span className={`text-xs font-bold uppercase tracking-widest block ${isV2 ? 'text-purple-400' : 'text-purple-600'}`}>
                 STEP 3
               </span>
-              
+
               <h3 className={`text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight ${isV2 ? 'text-white' : 'text-slate-900'}`}>
                 Follow the plan
               </h3>
@@ -292,9 +281,8 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
               <div className="pt-4">
                 <button
                   onClick={() => onOpenGoalModal ? onOpenGoalModal() : null}
-                  className="px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm shadow-lg shadow-purple-600/25 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 flex items-center gap-2 cursor-pointer"
+                  className="px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 flex items-center gap-2 cursor-pointer"
                 >
-                  <Sparkles className="w-4 h-4 text-purple-200" />
                   <span>Start free</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
@@ -303,22 +291,22 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
 
             {/* Right Visual: 1-Click Action Checklist Canvas */}
             <div className="lg:col-span-7 order-1 lg:order-2">
-              <div className={`relative rounded-[36px] p-6 sm:p-12 flex items-center justify-center overflow-hidden transition-all ${
+              <div className={`relative rounded-2xl p-6 sm:p-12 flex items-center justify-center overflow-hidden transition-all ${
                 isV2 
-                  ? 'bg-white/[0.03] border border-white/10 shadow-2xl shadow-black/60' 
-                  : 'bg-gradient-to-br from-purple-50/90 via-indigo-50/60 to-white/80 border border-purple-100/90 shadow-xl shadow-purple-950/5'
+                  ? 'bg-white/[0.03] border border-white/10' 
+                  : 'bg-slate-50 border border-slate-200'
               }`}>
                 
                 {/* Inner Action Checklist Card */}
-                <div className={`relative w-full max-w-[360px] rounded-3xl p-6 space-y-3.5 transition-all ${
+                <div className={`relative w-full max-w-[360px] rounded-2xl p-6 space-y-3.5 transition-all ${
                   isV2 
-                    ? 'bg-[#0c0e22] border border-white/15 text-white shadow-2xl shadow-purple-950/20' 
-                    : 'bg-white border border-purple-100 text-slate-900 shadow-2xl shadow-purple-950/10'
+                    ? 'bg-[#0c0e22] border border-white/15 text-white' 
+                    : 'bg-white border border-purple-100 text-slate-900'
                 }`}>
                   
                   <div className={`flex items-center justify-between pb-3 border-b ${isV2 ? 'border-white/10' : 'border-slate-100'}`}>
-                    <span className={`text-xs uppercase tracking-wider font-bold ${isV2 ? 'text-slate-400' : 'text-slate-400'}`}>1-Click Execution</span>
-                    <span className="text-xs font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full">AI Verified</span>
+                    <span className={`text-xs uppercase tracking-wider font-bold ${isV2 ? 'text-slate-400' : 'text-slate-400'}`}>Suggested changes</span>
+                    <span className={`text-xs ${isV2 ? 'text-slate-500' : 'text-slate-400'}`}>{appliedActions.length}/3 applied</span>
                   </div>
 
                   {/* Task 1 */}
@@ -327,7 +315,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
                     className={`p-3 rounded-2xl border transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-between cursor-pointer ${
                       appliedActions.includes(0) 
                         ? (isV2 ? 'bg-purple-950/50 border-purple-500/40 text-white' : 'bg-purple-50/90 border-purple-200') 
-                        : (isV2 ? 'bg-white/[0.04] border-white/10 text-slate-200 hover:border-white/20' : 'bg-slate-50 border-slate-200 hover:border-purple-200 hover:bg-white')
+                        : (isV2 ? 'bg-white/[0.04] border-white/10 text-slate-200' : 'bg-slate-50 border-slate-200 hover:border-purple-200 hover:bg-white')
                     }`}
                   >
                     <div className="text-left">
@@ -337,7 +325,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
                     <div className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all duration-300 ${
                       appliedActions.includes(0) ? 'bg-emerald-600 text-white' : (isV2 ? 'bg-white/10 text-slate-300' : 'bg-slate-200 text-slate-700')
                     }`}>
-                      {appliedActions.includes(0) ? 'Applied ✓' : 'Apply'}
+                      {appliedActions.includes(0) ? 'Applied' : 'Apply'}
                     </div>
                   </div>
 
@@ -347,7 +335,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
                     className={`p-3 rounded-2xl border transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-between cursor-pointer ${
                       appliedActions.includes(1) 
                         ? (isV2 ? 'bg-purple-950/50 border-purple-500/40 text-white' : 'bg-purple-50/90 border-purple-200') 
-                        : (isV2 ? 'bg-white/[0.04] border-white/10 text-slate-200 hover:border-white/20' : 'bg-slate-50 border-slate-200 hover:border-purple-200 hover:bg-white')
+                        : (isV2 ? 'bg-white/[0.04] border-white/10 text-slate-200' : 'bg-slate-50 border-slate-200 hover:border-purple-200 hover:bg-white')
                     }`}
                   >
                     <div className="text-left">
@@ -357,7 +345,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
                     <div className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all duration-300 ${
                       appliedActions.includes(1) ? 'bg-emerald-600 text-white' : (isV2 ? 'bg-white/10 text-slate-300' : 'bg-slate-200 text-slate-700')
                     }`}>
-                      {appliedActions.includes(1) ? 'Applied ✓' : 'Apply'}
+                      {appliedActions.includes(1) ? 'Applied' : 'Apply'}
                     </div>
                   </div>
 
@@ -365,17 +353,19 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
                   <div 
                     onClick={() => toggleAction(2)}
                     className={`p-3 rounded-2xl border transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-between cursor-pointer ${
-                      appliedActions.includes(2) ? 'bg-purple-50/90 border-purple-200' : 'bg-slate-50 border-slate-200 hover:border-purple-200 hover:bg-white'
+                      appliedActions.includes(2) 
+                        ? (isV2 ? 'bg-purple-950/50 border-purple-500/40 text-white' : 'bg-purple-50/90 border-purple-200') 
+                        : (isV2 ? 'bg-white/[0.04] border-white/10 text-slate-200' : 'bg-slate-50 border-slate-200 hover:border-purple-200 hover:bg-white')
                     }`}
                   >
                     <div className="text-left">
-                      <span className="text-xs font-bold text-slate-900 block">Sync Abandoned Cart Audience</span>
-                      <span className="text-[10px] text-slate-500">Shopify to Meta instant match</span>
+                      <span className={`text-xs font-bold block ${isV2 ? 'text-white' : 'text-slate-900'}`}>Sync Abandoned Cart Audience</span>
+                      <span className={`text-[10px] ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>Shopify to Meta instant match</span>
                     </div>
                     <div className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all duration-300 ${
-                      appliedActions.includes(2) ? 'bg-emerald-600 text-white' : 'bg-purple-600 text-white'
+                      appliedActions.includes(2) ? 'bg-emerald-600 text-white' : (isV2 ? 'bg-white/10 text-slate-300' : 'bg-slate-200 text-slate-700')
                     }`}>
-                      {appliedActions.includes(2) ? 'Applied ✓' : 'Apply'}
+                      {appliedActions.includes(2) ? 'Applied' : 'Apply'}
                     </div>
                   </div>
 

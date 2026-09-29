@@ -50,17 +50,12 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onOpenContactModal }) =>
 
   return (
     <section id="faq" className={`relative py-14 sm:py-16 lg:py-[100px] overflow-hidden transition-colors duration-500 ${isV2 ? 'bg-[#070814] text-white' : 'bg-white text-slate-900'}`}>
-      {/* Background ambient lighting */}
-      <div className={`absolute top-1/2 right-1/4 w-[500px] h-[500px] rounded-full blur-[160px] pointer-events-none ${isV2 ? 'bg-purple-900/20' : 'bg-purple-100/30'}`} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           
           {/* Left Column: Heading & CTA */}
           <div className="lg:col-span-5 relative">
-            <span className={`text-xs font-bold uppercase tracking-widest block mb-3 ${isV2 ? 'text-purple-400' : 'text-purple-600'}`}>
-              FAQ
-            </span>
             <h2 className={`text-4xl sm:text-5xl lg:text-[54px] font-extrabold tracking-tight leading-[1.08] ${isV2 ? 'text-white' : 'text-slate-900'}`}>
               Do you have<br />questions
             </h2>
@@ -71,8 +66,8 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onOpenContactModal }) =>
                 onClick={onOpenContactModal}
                 className={
                   isV2
-                    ? 'px-7 py-3.5 rounded-full bg-black/90 hover:bg-black text-white font-bold text-sm border border-white/20 shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:shadow-[0_0_35px_rgba(168,85,247,0.6)] active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2'
-                    : 'px-7 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm shadow-lg shadow-purple-600/25 active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2'
+                    ? 'px-7 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2'
+                    : 'px-7 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2'
                 }
               >
                 <span>More questions</span>
@@ -104,7 +99,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onOpenContactModal }) =>
                       {faq.question}
                     </span>
                     <div
-                      className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                         isOpen 
                           ? 'rotate-45 bg-purple-700 text-white' 
                           : isV2 

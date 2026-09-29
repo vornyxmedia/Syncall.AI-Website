@@ -30,7 +30,7 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({
 
       {/* Asymmetric Organic Floating Diamond */}
       <FloatingDiamond 
-        className="top-12 right-[5%]" 
+        className="top-12 right-[5%] opacity-30" 
         size="md" 
         rotation="rotate-[36deg]" 
         colorVariant="purple" 
@@ -42,7 +42,7 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           
           {/* LEFT LARGE HERO CARD */}
-          <div className="lg:col-span-5 relative rounded-[36px] bg-gradient-to-br from-[#2563EB] via-[#6366F1] to-[#A855F7] p-8 sm:p-12 lg:p-14 flex flex-col justify-between shadow-2xl shadow-purple-950/15 border border-white/20 overflow-hidden text-white min-h-[500px] lg:min-h-[580px]">
+          <div className="lg:col-span-5 relative rounded-2xl bg-gradient-to-br from-[#2563EB] via-[#6366F1] to-[#A855F7] p-8 sm:p-12 lg:p-14 flex flex-col justify-between shadow-2xl shadow-purple-950/15 border border-white/20 overflow-hidden text-white min-h-[500px] lg:min-h-[580px]">
             
             {/* Subtle luminous ambient glow effects inside the card */}
             <div className="absolute -top-24 -right-24 w-80 h-80 bg-white/20 rounded-full blur-3xl pointer-events-none" />
@@ -101,7 +101,7 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
             
             {/* ITEM 1 (Top-Left): Rounded Founder Photo */}
-            <div className="relative rounded-[32px] sm:rounded-[36px] overflow-hidden shadow-lg shadow-purple-950/5 border border-purple-100/70 min-h-[260px] sm:min-h-[280px] bg-slate-100">
+            <div className="relative rounded-2xl overflow-hidden shadow-lg shadow-purple-950/5 border border-purple-100/70 min-h-[260px] sm:min-h-[280px] bg-slate-100">
               <img 
                 src={`${import.meta.env.BASE_URL}problem-founder-workspace.jpg`}
                 alt="Business owner working relaxed with Syncall AI" 
@@ -117,7 +117,7 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({
             </div>
 
             {/* ITEM 2 (Top-Right): Problem Card 1 */}
-            <div className={`rounded-[32px] sm:rounded-[36px] p-6 sm:p-8 flex flex-col justify-between transition-all ${
+            <div className={`rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all ${
               isV2 
                 ? 'bg-white/[0.03] border border-white/10 text-white shadow-lg shadow-black/40 hover:border-purple-500/30' 
                 : 'bg-[#F3F6FE] border border-blue-100/70 shadow-sm text-slate-900'
@@ -147,7 +147,7 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({
             </div>
 
             {/* ITEM 3 (Bottom-Left): Problem Card 2 */}
-            <div className={`rounded-[32px] sm:rounded-[36px] p-6 sm:p-8 flex flex-col justify-between transition-all ${
+            <div className={`rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all ${
               isV2 
                 ? 'bg-white/[0.03] border border-white/10 text-white shadow-lg shadow-black/40 hover:border-purple-500/30' 
                 : 'bg-[#F3F6FE] border border-blue-100/70 shadow-sm text-slate-900'
@@ -177,7 +177,7 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({
             </div>
 
             {/* ITEM 4 (Bottom-Right): Problem Card 3 */}
-            <div className={`rounded-[32px] sm:rounded-[36px] p-6 sm:p-8 flex flex-col justify-between transition-all ${
+            <div className={`rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all ${
               isV2 
                 ? 'bg-white/[0.03] border border-white/10 text-white shadow-lg shadow-black/40 hover:border-purple-500/30' 
                 : 'bg-[#F3F6FE] border border-blue-100/70 shadow-sm text-slate-900'
