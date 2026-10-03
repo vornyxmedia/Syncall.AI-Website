@@ -3,11 +3,11 @@ import { ArrowRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 interface ClosingCtaProps {
-  onOpenGoalModal: () => void;
+  onOpenSignUp: () => void;
   onOpenContactModal: () => void;
 }
 
-export const ClosingCta: React.FC<ClosingCtaProps> = ({ onOpenGoalModal }) => {
+export const ClosingCta: React.FC<ClosingCtaProps> = ({ onOpenSignUp }) => {
   const { isDuskMode } = useTheme();
   const isV2 = isDuskMode;
 
@@ -40,7 +40,7 @@ export const ClosingCta: React.FC<ClosingCtaProps> = ({ onOpenGoalModal }) => {
 
               <div className="pt-2">
                 <button
-                  onClick={onOpenGoalModal}
+                  onClick={onOpenSignUp}
                   className={
                     isV2
                       ? 'inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-base active:scale-95 transition-all duration-200 cursor-pointer'

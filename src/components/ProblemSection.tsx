@@ -11,12 +11,12 @@ import { FloatingDiamond } from './FloatingDiamond';
 import { useTheme } from '../context/ThemeContext';
 
 interface ProblemSectionProps {
-  onOpenGoalModal?: () => void;
+  onOpenSignUp?: () => void;
   onOpenContactModal?: () => void;
 }
 
 export const ProblemSection: React.FC<ProblemSectionProps> = ({
-  onOpenGoalModal,
+  onOpenSignUp,
   onOpenContactModal,
 }) => {
   const { isDuskMode } = useTheme();
@@ -71,7 +71,7 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
                 {/* Primary CTA Button */}
                 <button
-                  onClick={onOpenGoalModal}
+                  onClick={onOpenSignUp}
                   className="px-7 py-3.5 rounded-full bg-white text-purple-700 font-bold hover:bg-purple-50 shadow-lg shadow-purple-950/20 active:scale-[0.98] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer"
                 >
                   <span>Start free</span>

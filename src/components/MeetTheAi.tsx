@@ -2,10 +2,10 @@ import React from 'react';
 import { useTheme } from '../context/ThemeContext';
 
 interface MeetTheAiProps {
-  onOpenGoalModal?: () => void;
+  onOpenSignUp?: () => void;
 }
 
-export const MeetTheAi: React.FC<MeetTheAiProps> = ({ onOpenGoalModal }) => {
+export const MeetTheAi: React.FC<MeetTheAiProps> = ({ onOpenSignUp }) => {
   const { isDuskMode } = useTheme();
   const isV2 = isDuskMode;
 
@@ -51,7 +51,7 @@ export const MeetTheAi: React.FC<MeetTheAiProps> = ({ onOpenGoalModal }) => {
           {/* CTA Action Button */}
           <div className="pt-8 sm:pt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
-              onClick={onOpenGoalModal}
+              onClick={onOpenSignUp}
               className={
                 isV2
                   ? 'px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm sm:text-base active:scale-[0.98] transition-all duration-300 cursor-pointer'

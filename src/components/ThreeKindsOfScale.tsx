@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Check, Loader2, ArrowRight } from 'lucide-react';
+import { GoogleAdsLogo, MetaLogo, ShopifyLogo, TikTokLogo, GoogleAnalyticsLogo, LinkedInLogo, MicrosoftAdsLogo, XLogo, AmazonLogo } from './BrandLogos';
 import { useTheme } from '../context/ThemeContext';
 
 interface ThreeKindsOfScaleProps {
@@ -24,120 +25,67 @@ const LOCATION_REGIONS = [
   { region: 'West', locations: 308, leads: '5,230', cpl: '$18' },
 ] as const;
 
-type AccountStatus = 'healthy' | 'fixed' | 'flagged';
+interface StreamItem {
+  icon?: React.ReactNode;
+  symbol?: string;
+  bg: string;
+  text: string;
+}
 
-const SCAN_COLS = 12;
-const SCAN_TOTAL = SCAN_COLS * 10;
-const SCAN_STEP_MS = 45;
-const SCAN_HOLD_MS = 3200;
-
-// Deterministic spread of outcomes so the grid looks organic but never jumps
-// between renders: roughly 1 in 12 accounts gets auto-fixed, 1 in 12 flagged.
-const accountStatus = (i: number): AccountStatus => {
-  const h = (i * 7919 + 13) % 23;
-  if (h === 0 || h === 11) return 'flagged';
-  if (h === 3 || h === 17) return 'fixed';
-  return 'healthy';
-};
-
-const ACCOUNT_STATUSES: AccountStatus[] = Array.from({ length: SCAN_TOTAL }, (_, i) => accountStatus(i));
-
-const FIXED_EVENTS = [
-  'Meta ad set overspending by 18%, paused',
-  'Broken tracking link on Google Ads, repaired',
-  'TikTok budget ran out by 2pm, rebalanced',
-  'Weekly client report sent',
+// Single cyclic sequence (5 logos, each followed by 3 placeholder marks) that the
+// 5 scrolling columns below are sliced from, offset by 4 items each — this is
+// what keeps a matching icon lined up at the seam between adjacent columns.
+// To add another brand, drop it in here; no column array needs touching.
+const PLATFORM_STREAM: StreamItem[] = [
+  { icon: <GoogleAdsLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-slate-700' },
+  { icon: <LinkedInLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-blue-700' },
+  { symbol: '★', bg: 'bg-white', text: 'text-amber-500' },
+  { symbol: '◇', bg: 'bg-white/80', text: 'text-slate-400' },
+  { icon: <MetaLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-blue-600' },
+  { symbol: '✦', bg: 'bg-white', text: 'text-slate-500' },
+  { symbol: '◆', bg: 'bg-white', text: 'text-indigo-600' },
+  { symbol: '○', bg: 'bg-white/80', text: 'text-slate-400' },
+  { icon: <TikTokLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-slate-900' },
+  { icon: <MicrosoftAdsLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-teal-700' },
+  { symbol: '▲', bg: 'bg-white', text: 'text-orange-500' },
+  { symbol: '□', bg: 'bg-white/80', text: 'text-slate-400' },
+  { icon: <ShopifyLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-emerald-600' },
+  { symbol: '◈', bg: 'bg-white', text: 'text-slate-500' },
+  { symbol: '✿', bg: 'bg-white', text: 'text-teal-600' },
+  { symbol: '△', bg: 'bg-white/80', text: 'text-slate-400' },
+  { icon: <GoogleAnalyticsLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-amber-600' },
+  { icon: <XLogo className="w-5 h-5" />, bg: 'bg-white', text: 'text-slate-900' },
+  { icon: <AmazonLogo className="h-2.5 w-auto" />, bg: 'bg-white', text: 'text-orange-600' },
+  { symbol: '☆', bg: 'bg-white/80', text: 'text-slate-400' },
 ];
 
-const FLAGGED_EVENTS = [
-  'Shopify sales down 40% since Tuesday',
-  'LinkedIn cost per lead jumped to $142',
-  'Checkout pixel stopped firing',
-];
+const STREAM_COLUMN_COUNT = 5;
+const STREAM_COLUMN_SIZE = 6;
+const STREAM_COLUMN_STEP = 4;
 
-const scanEventFor = (i: number) => {
-  const status = ACCOUNT_STATUSES[i];
-  const pool = status === 'flagged' ? FLAGGED_EVENTS : FIXED_EVENTS;
-  return { status, client: `Client #${String(i + 1).padStart(3, '0')}`, text: pool[i % pool.length] };
-};
-
-const prefersReducedMotion = () =>
-  typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-
-const AccountHealthScan: React.FC<{ isDark: boolean }> = ({ isDark }) => {
-  // Number of accounts the agent has checked so far in the current sweep
-  const [scanned, setScanned] = useState(() => (prefersReducedMotion() ? SCAN_TOTAL : 0));
-
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const timer = scanned < SCAN_TOTAL
-      ? setTimeout(() => setScanned((n) => n + 1), SCAN_STEP_MS)
-      : setTimeout(() => setScanned(0), SCAN_HOLD_MS);
-    return () => clearTimeout(timer);
-  }, [scanned]);
-
-  const counts = useMemo(() => {
-    const c = { healthy: 0, fixed: 0, flagged: 0 };
-    for (let i = 0; i < scanned; i++) c[ACCOUNT_STATUSES[i]]++;
-    return c;
-  }, [scanned]);
-
-  // Most recent non-healthy account the sweep has passed, shown in the ticker
-  const latestEvent = useMemo(() => {
-    for (let i = scanned - 1; i >= 0; i--) {
-      if (ACCOUNT_STATUSES[i] !== 'healthy') return { index: i, ...scanEventFor(i) };
-    }
-    return null;
-  }, [scanned]);
-
-  const cellClass = (i: number) => {
-    if (i >= scanned) return isDark ? 'bg-white/[0.05]' : 'bg-slate-200/70';
-    const status = ACCOUNT_STATUSES[i];
-    if (status === 'flagged') return 'bg-amber-400';
-    if (status === 'fixed') return 'bg-purple-500';
-    return isDark ? 'bg-emerald-400/35' : 'bg-emerald-500/35';
-  };
-
-  const muted = isDark ? 'text-slate-400' : 'text-slate-500';
-
-  return (
-    <div className={`rounded-xl p-4 border space-y-3 ${
-      isDark ? 'bg-[#0b0d20] border-white/10' : 'bg-white border-slate-200'
-    }`}>
-      <div className={`flex items-baseline justify-between text-xs ${muted}`}>
-        <span>Checked today</span>
-        <span className="tabular-nums">
-          <span className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>{scanned}</span> / {SCAN_TOTAL}
-        </span>
-      </div>
-
-      {/* One cell per client account */}
-      <div className="grid gap-[3px]" style={{ gridTemplateColumns: `repeat(${SCAN_COLS}, minmax(0, 1fr))` }} aria-hidden="true">
-        {ACCOUNT_STATUSES.map((_, i) => (
-          <div key={i} className={`aspect-square rounded-[3px] transition-colors duration-200 ${cellClass(i)}`} />
-        ))}
-      </div>
-
-      <div className={`flex items-center gap-4 text-[11px] ${muted}`}>
-        <span className="flex items-center gap-1.5"><span className={`w-2 h-2 rounded-[2px] ${isDark ? 'bg-emerald-400/35' : 'bg-emerald-500/35'}`} />{counts.healthy} fine</span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-[2px] bg-purple-500" />{counts.fixed} fixed</span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-[2px] bg-amber-400" />{counts.flagged} for you</span>
-      </div>
-
-      <div className={`pt-3 border-t text-xs truncate ${isDark ? 'border-white/10 text-slate-300' : 'border-slate-200 text-slate-600'}`}>
-        {latestEvent ? (
-          <>
-            <span className={`font-medium ${isDark ? 'text-white' : 'text-slate-900'}`}>{latestEvent.client}</span>
-            <span className={muted}> — </span>
-            {latestEvent.text}
-          </>
-        ) : (
-          <span className={muted}>Checking pacing, tracking and reports</span>
-        )}
-      </div>
-    </div>
+// Each column is a 6-item window into PLATFORM_STREAM, offset by 4; the list is
+// doubled up front so the scroll animation can loop seamlessly via CSS alone.
+const STREAM_COLUMNS: StreamItem[][] = Array.from({ length: STREAM_COLUMN_COUNT }, (_, colIdx) => {
+  const window = Array.from({ length: STREAM_COLUMN_SIZE }, (_, i) =>
+    PLATFORM_STREAM[(colIdx * STREAM_COLUMN_STEP + i) % PLATFORM_STREAM.length]
   );
-};
+  return [...window, ...window];
+});
+
+const StreamColumn: React.FC<{ items: StreamItem[]; isUp: boolean }> = ({ items, isUp }) => (
+  <div className="flex flex-col gap-2.5 overflow-hidden">
+    <div className={`flex flex-col gap-2.5 ${isUp ? 'animate-vertical-up' : 'animate-vertical-down'}`}>
+      {items.map((item, idx) => (
+        <div
+          key={idx}
+          className={`w-9 h-9 sm:w-10 sm:h-10 rounded-2xl ${item.bg} border border-slate-200/80 shadow-xs flex items-center justify-center text-xs font-bold ${item.text} shrink-0`}
+        >
+          {item.icon ?? item.symbol}
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 export const ThreeKindsOfScale: React.FC<ThreeKindsOfScaleProps> = ({ onOpenContactModal }) => {
   const { isDuskMode } = useTheme();
@@ -196,16 +144,35 @@ export const ThreeKindsOfScale: React.FC<ThreeKindsOfScaleProps> = ({ onOpenCont
           {/* COLUMN 1: AGENCIES */}
           <div className={`rounded-2xl p-7 sm:p-9 flex flex-col justify-between relative overflow-hidden transition-all duration-300 border ${cardSurfaceClass}`}>
             <div>
+              <p className={`text-xs font-bold uppercase tracking-wider mb-2 ${isV2 ? 'text-purple-300' : 'text-purple-600'}`}>
+                AGENCIES
+              </p>
               <h3 className={`text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug mb-3 ${isV2 ? 'text-white' : 'text-slate-900'}`}>
-                100s of Accounts
+                Connect Multiple Accounts
               </h3>
               <p className={`text-sm leading-relaxed font-normal mb-6 ${isV2 ? 'text-slate-300' : 'text-slate-600'}`}>
                 Agents run reporting, QA, and pacing on every client. Monitor hundreds daily in minutes, not days.
               </p>
             </div>
 
-            {/* Visual: Agent health sweep across every client account */}
-            <AccountHealthScan isDark={isV2} />
+            {/* Visual: Smooth Infinite Vertical Account Streams */}
+            <div className={`relative h-56 sm:h-64 overflow-hidden rounded-2xl p-3 border ${
+              isV2 ? 'bg-[#131738]/60 border-white/10' : 'bg-white border-slate-200'
+            }`}>
+              {/* Top & Bottom fade masks for seamless streaming */}
+              <div className={`absolute inset-x-0 top-0 h-10 z-10 pointer-events-none bg-gradient-to-b ${
+                isV2 ? 'from-[#0e1126] to-transparent' : 'from-white to-transparent'
+              }`} />
+              <div className={`absolute inset-x-0 bottom-0 h-10 z-10 pointer-events-none bg-gradient-to-t ${
+                isV2 ? 'from-[#0e1126] to-transparent' : 'from-white to-transparent'
+              }`} />
+
+              <div className="grid grid-cols-5 gap-2 sm:gap-2.5 h-full justify-items-center">
+                {STREAM_COLUMNS.map((items, idx) => (
+                  <StreamColumn key={idx} items={items} isUp={idx % 2 === 0} />
+                ))}
+              </div>
+            </div>
 
           </div>
 

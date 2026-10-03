@@ -3,11 +3,12 @@ import { ChevronDown, Menu, X, ArrowRight, Bot, Layers, Target, FileText, Zap, H
 import { useTheme } from '../context/ThemeContext';
 
 interface NavbarProps {
-  onOpenGoalModal: () => void;
+  onOpenSignUp: () => void;
+  onOpenLogin: () => void;
   onOpenContactModal?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactModal }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenSignUp, onOpenLogin, onOpenContactModal }) => {
   const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -250,7 +251,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
 
             {/* 4. Pricing (Direct Link to Free Trial) */}
             <button 
-              onClick={onOpenGoalModal}
+              onClick={onOpenSignUp}
               className={`text-sm font-semibold transition-colors duration-300 py-1.5 text-left ${
                 isDarkHeader ? 'text-slate-200 hover:text-white' : 'text-slate-700 hover:text-purple-700'
               }`}
@@ -354,7 +355,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
         {/* Right Side Actions: "Log in" link + "Get a demo" button + Light/Dark Toggle */}
         <div className="hidden lg:flex items-center gap-4">
           <button
-            onClick={onOpenGoalModal}
+            onClick={onOpenLogin}
             className={`text-sm font-semibold transition-colors duration-300 ${
               isDarkHeader ? 'text-white/80 hover:text-white' : 'text-slate-700 hover:text-purple-700'
             }`}
@@ -363,7 +364,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
           </button>
 
           <button
-            onClick={onOpenContactModal || onOpenGoalModal}
+            onClick={onOpenContactModal || onOpenSignUp}
             className={`min-h-[38px] px-5 sm:px-6 py-2 rounded-full font-semibold text-xs sm:text-sm active:scale-[0.98] transition-all duration-300 ease-out focus-visible:outline-none ${
               isDarkHeader
                 ? 'bg-purple-600 hover:bg-purple-700 text-white'
@@ -444,7 +445,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
           <button
             onClick={() => {
               setMobileMenuOpen(false);
-              onOpenGoalModal();
+              onOpenSignUp();
             }}
             className="text-sm font-semibold text-slate-800 hover:text-purple-700 py-2.5 px-3 rounded-xl hover:bg-purple-50 transition-colors duration-200 text-left w-full"
           >
@@ -465,7 +466,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
           <button
             onClick={() => {
               setMobileMenuOpen(false);
-              onOpenGoalModal();
+              onOpenLogin();
             }}
             className="w-full py-2 text-center text-sm font-semibold text-slate-700 hover:text-purple-700 transition-colors duration-200"
           >
@@ -475,7 +476,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenGoalModal, onOpenContactMo
             onClick={() => {
               setMobileMenuOpen(false);
               if (onOpenContactModal) onOpenContactModal();
-              else onOpenGoalModal();
+              else onOpenSignUp();
             }}
             className="w-full flex items-center justify-center py-2.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm active:scale-[0.98] transition-all duration-300 ease-out"
           >

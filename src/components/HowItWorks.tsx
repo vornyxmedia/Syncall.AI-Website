@@ -3,10 +3,10 @@ import { TrendingDown, TrendingUp, ShieldCheck, Check, ArrowRight } from 'lucide
 import { useTheme } from '../context/ThemeContext';
 
 interface HowItWorksProps {
-  onOpenGoalModal?: () => void;
+  onOpenSignUp?: () => void;
 }
 
-export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
+export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenSignUp }) => {
   const { isDuskMode } = useTheme();
   const isV2 = isDuskMode;
   const [selectedGoal, setSelectedGoal] = useState<'cpa' | 'revenue' | 'waste'>('cpa');
@@ -158,7 +158,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
 
               <div className="pt-4">
                 <button
-                  onClick={() => onOpenGoalModal ? onOpenGoalModal() : null}
+                  onClick={() => onOpenSignUp ? onOpenSignUp() : null}
                   className="px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 flex items-center gap-2 cursor-pointer"
                 >
                   <span>Set your goal</span>
@@ -221,7 +221,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
 
                 <div className="pt-4">
                   <button
-                    onClick={() => onOpenGoalModal ? onOpenGoalModal() : null}
+                    onClick={() => onOpenSignUp ? onOpenSignUp() : null}
                     className="px-8 py-3.5 rounded-full bg-white text-purple-700 hover:bg-purple-50 font-bold text-sm active:scale-95 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center gap-2 cursor-pointer"
                   >
                     <span>Connect your accounts</span>
@@ -280,7 +280,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenGoalModal }) => {
 
               <div className="pt-4">
                 <button
-                  onClick={() => onOpenGoalModal ? onOpenGoalModal() : null}
+                  onClick={() => onOpenSignUp ? onOpenSignUp() : null}
                   className="px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 flex items-center gap-2 cursor-pointer"
                 >
                   <span>Start free</span>

@@ -3,7 +3,7 @@ import { ArrowUp } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 interface FooterProps {
-  onOpenGoalModal?: () => void;
+  onOpenSignUp?: () => void;
   onOpenContactModal?: () => void;
 }
 
@@ -169,16 +169,7 @@ export const Footer: React.FC<FooterProps> = () => {
               <div className="space-y-1">
                 <span className="text-slate-500 font-medium block">Support</span>
                 <a href="mailto:info@syncall.ai" className="hover:text-white transition-colors block">info@syncall.ai</a>
-                <span className="text-slate-400 block">1-855-646-5222</span>
-              </div>
-
-              <div className="space-y-1">
-                <span className="text-slate-500 font-medium block">Address</span>
-                <p className="text-slate-400 leading-relaxed">
-                  New T - 13/14, Shukkar Bazar, <br />
-                  Uttam Nagar, <br />
-                  <span className="whitespace-nowrap">New Delhi - 110059</span>
-                </p>
+                <a href="tel:+919355222725" className="text-slate-400 hover:text-white transition-colors block">+91 93552 22725</a>
               </div>
 
               <div className="space-y-1">

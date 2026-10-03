@@ -7,7 +7,7 @@ import {
 } from './BrandLogos';
 
 interface HeroV2Props {
-  onOpenGoalModal: (presetGoal?: string) => void;
+  onOpenSignUp: () => void;
   onScrollToDemo: () => void;
 }
 
@@ -73,7 +73,7 @@ const INTEGRATION_GROUPS: { name: string; items: { name: string; Icon: React.FC<
 // Flat list for the marquee, in group order
 const INTEGRATIONS = INTEGRATION_GROUPS.flatMap((group) => group.items);
 
-export const HeroV2: React.FC<HeroV2Props> = ({ onOpenGoalModal, onScrollToDemo }) => {
+export const HeroV2: React.FC<HeroV2Props> = ({ onOpenSignUp, onScrollToDemo }) => {
   return (
     <section id="hero" className="relative z-10 overflow-x-clip bg-[#070814] text-left">
       {/* Warm amber glow anchored to the top-left corner */}
@@ -109,7 +109,7 @@ export const HeroV2: React.FC<HeroV2Props> = ({ onOpenGoalModal, onScrollToDemo 
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
             <button
-              onClick={() => onOpenGoalModal()}
+              onClick={() => onOpenSignUp()}
               className="px-7 py-3.5 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm sm:text-base active:scale-[0.98] transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Start Project</span>

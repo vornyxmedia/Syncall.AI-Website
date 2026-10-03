@@ -5,12 +5,12 @@ import { useTheme } from '../context/ThemeContext';
 
 interface OnePlatformSectionProps {
   onOpenContactModal?: () => void;
-  onOpenGoalModal?: () => void;
+  onOpenSignUp?: () => void;
 }
 
 export const OnePlatformSection: React.FC<OnePlatformSectionProps> = ({
   onOpenContactModal,
-  onOpenGoalModal,
+  onOpenSignUp,
 }) => {
   const { isDuskMode } = useTheme();
   const isV2 = isDuskMode;

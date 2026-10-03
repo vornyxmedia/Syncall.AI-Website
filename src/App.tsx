@@ -10,7 +10,7 @@ import { BuiltFor } from './components/BuiltFor';
 import { FaqSection } from './components/FaqSection';
 import { ClosingCta } from './components/ClosingCta';
 import { Footer } from './components/Footer';
-import { GoalModal } from './components/GoalModal';
+import { AuthModal, AuthMode } from './components/AuthModal';
 import { ContactModal } from './components/ContactModal';
 import { CustomerResults } from './components/CustomerResults';
 import { OnePlatformSection } from './components/OnePlatformSection';
@@ -20,9 +20,9 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 
 function MainLayout() {
   const { theme, isDuskMode } = useTheme();
-  const [goalModalOpen, setGoalModalOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<AuthMode>('signup');
   const [contactModalOpen, setContactModalOpen] = useState(false);
-  const [activeGoalPreset, setActiveGoalPreset] = useState<string>('');
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
@@ -37,9 +37,9 @@ function MainLayout() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleOpenGoalModal = (preset?: string) => {
-    setActiveGoalPreset(preset || '');
-    setGoalModalOpen(true);
+  const openAuth = (mode: AuthMode) => {
+    setAuthMode(mode);
+    setAuthModalOpen(true);
   };
 
   const scrollToDemo = () => {
@@ -63,28 +63,29 @@ function MainLayout() {
 
       {/* Top Navbar */}
       <Navbar 
-        onOpenGoalModal={() => handleOpenGoalModal()} 
+        onOpenSignUp={() => openAuth('signup')}
+        onOpenLogin={() => openAuth('signin')} 
         onOpenContactModal={() => setContactModalOpen(true)} 
       />
 
       {/* Hero Section */}
       <main>
         <Hero 
-          onOpenGoalModal={handleOpenGoalModal} 
+          onOpenSignUp={() => openAuth('signup')} 
           onScrollToDemo={scrollToDemo} 
         />
 
         {/* How it works: 3-Tier Interactive Showcase */}
-        <HowItWorks onOpenGoalModal={() => handleOpenGoalModal()} />
+        <HowItWorks onOpenSignUp={() => openAuth('signup')} />
 
         {/* Why marketing feels harder than it should */}
         <ProblemSection 
-          onOpenGoalModal={() => handleOpenGoalModal()} 
+          onOpenSignUp={() => openAuth('signup')} 
           onOpenContactModal={() => setContactModalOpen(true)} 
         />
 
         {/* Meet the AI: Panoramic 3D Wave Curtain Banner */}
-        <MeetTheAi onOpenGoalModal={() => handleOpenGoalModal()} />
+        <MeetTheAi onOpenSignUp={() => openAuth('signup')} />
 
         {/* Real numbers from teams that made the switch */}
         <CustomerResults />
@@ -92,7 +93,7 @@ function MainLayout() {
         {/* One Platform. Tuned to Every Account You Run */}
         <OnePlatformSection 
           onOpenContactModal={() => setContactModalOpen(true)} 
-          onOpenGoalModal={() => handleOpenGoalModal()} 
+          onOpenSignUp={() => openAuth('signup')} 
         />
 
         {/* Three Kinds of Scale. One Platform. */}
@@ -105,29 +106,29 @@ function MainLayout() {
         <InteractiveDashboardDemo />
 
         {/* Built for: Personas */}
-        <BuiltFor onOpenGoalModal={() => handleOpenGoalModal()} />
+        <BuiltFor onOpenSignUp={() => openAuth('signup')} />
 
         {/* Frequently asked questions */}
         <FaqSection onOpenContactModal={() => setContactModalOpen(true)} />
 
         {/* Closing call to action */}
         <ClosingCta 
-          onOpenGoalModal={() => handleOpenGoalModal()} 
+          onOpenSignUp={() => openAuth('signup')} 
           onOpenContactModal={() => setContactModalOpen(true)} 
         />
       </main>
 
       {/* Footer */}
       <Footer
-        onOpenGoalModal={() => handleOpenGoalModal()}
+        onOpenSignUp={() => openAuth('signup')}
         onOpenContactModal={() => setContactModalOpen(true)}
       />
 
       {/* Modals */}
-      <GoalModal 
-        isOpen={goalModalOpen} 
-        onClose={() => setGoalModalOpen(false)} 
-        initialGoal={activeGoalPreset} 
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        initialMode={authMode}
       />
       <ContactModal 
         isOpen={contactModalOpen} 

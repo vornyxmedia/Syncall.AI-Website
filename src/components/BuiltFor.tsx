@@ -3,10 +3,10 @@ import { Store, UserCheck, Users2, Check, ArrowRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 interface BuiltForProps {
-  onOpenGoalModal?: () => void;
+  onOpenSignUp?: () => void;
 }
 
-export const BuiltFor: React.FC<BuiltForProps> = ({ onOpenGoalModal }) => {
+export const BuiltFor: React.FC<BuiltForProps> = ({ onOpenSignUp }) => {
   const { isDuskMode } = useTheme();
   const isV2 = isDuskMode;
 
@@ -132,7 +132,7 @@ export const BuiltFor: React.FC<BuiltForProps> = ({ onOpenGoalModal }) => {
         {/* Section Bottom CTA Button */}
         <div className="mt-14 sm:mt-16 flex flex-col items-center justify-center text-center">
           <button
-            onClick={onOpenGoalModal}
+            onClick={onOpenSignUp}
             className="px-10 py-4 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-base active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2.5"
           >
             <span>Get a Demo</span>
