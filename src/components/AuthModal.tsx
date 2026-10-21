@@ -231,8 +231,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
         {mode === 'signup' && (
           <p className="mt-4 text-center text-[11px] leading-relaxed text-slate-400">
             By creating an account you agree to our{' '}
-            <a href="#" className="underline hover:text-slate-600">Terms of Service</a> and{' '}
-            <a href="#" className="underline hover:text-slate-600">Privacy Policy</a>.
+            <a href="/legal/terms.html" className="underline hover:text-slate-600">Terms of Service</a> and{' '}
+            <a href="/legal/privacy.html" className="underline hover:text-slate-600">Privacy Policy</a>.
           </p>
         )}
       </div>

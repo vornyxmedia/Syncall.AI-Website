@@ -9,12 +9,6 @@ export const MeetTheAi: React.FC<MeetTheAiProps> = ({ onOpenSignUp }) => {
   const { isDuskMode } = useTheme();
   const isV2 = isDuskMode;
 
-  const scrollToResults = () => {
-    const el = document.getElementById('customer-results');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section id="meet-ai" className={`relative overflow-hidden transition-colors duration-500 ${isV2 ? 'bg-[#070814]' : 'bg-white'}`}>
@@ -59,12 +53,6 @@ export const MeetTheAi: React.FC<MeetTheAiProps> = ({ onOpenSignUp }) => {
               }
             >
               Get early access
-            </button>
-            <button
-              onClick={scrollToResults}
-              className="px-7 py-3.5 rounded-full hover:bg-white/10 text-white font-semibold text-sm sm:text-base border border-white/20 active:scale-[0.98] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer flex items-center gap-2"
-            >
-              <span>See customer results</span>
             </button>
           </div>
 

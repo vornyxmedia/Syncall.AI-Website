@@ -103,7 +103,6 @@ export const Footer: React.FC<FooterProps> = () => {
                   <li><a href="#what-you-get" className="hover:text-white transition-colors">Data Cloud</a></li>
                   <li><a href="#meet-ai" className="hover:text-white transition-colors">AI Agents Showcase</a></li>
                   <li><a href="#one-platform" className="hover:text-white transition-colors">Integrations</a></li>
-                  <li><a href="#what-you-get" className="hover:text-white transition-colors">Snowflake Connected App</a></li>
                 </ul>
               </div>
 
@@ -112,7 +111,6 @@ export const Footer: React.FC<FooterProps> = () => {
                 <ul className="space-y-2 text-slate-400">
                   <li><a href="#what-you-get" className="hover:text-white transition-colors">Reporting</a></li>
                   <li><a href="#live-demo" className="hover:text-white transition-colors">Dashboards</a></li>
-                  <li><a href="#what-you-get" className="hover:text-white transition-colors">Generative Data Apps</a></li>
                   <li><a href="#meet-ai" className="hover:text-white transition-colors">AI Agents</a></li>
                   <li><a href="#what-you-get" className="hover:text-white transition-colors">Budget Management</a></li>
                 </ul>
@@ -136,28 +134,29 @@ export const Footer: React.FC<FooterProps> = () => {
             {/* Column 3: DISCOVER, CUSTOMER SUPPORT & COMPANY */}
             <div className="space-y-8">
               <div className="space-y-3">
-                <span className="font-bold text-white uppercase tracking-wider block">Discover</span>
+                <span className="font-bold text-white uppercase tracking-wider block">Legal</span>
                 <ul className="space-y-2 text-slate-400">
-                  <li><a href="#customer-results" className="hover:text-white transition-colors">Blog</a></li>
-                  <li><a href="#meet-ai" className="hover:text-white transition-colors">What Gets Measured Podcast</a></li>
-                  <li><a href="#customer-results" className="hover:text-white transition-colors">Case Studies</a></li>
-                  <li><a href="#live-demo" className="hover:text-white transition-colors">Report Template Gallery</a></li>
+                  <li><a href="/legal/terms.html" className="hover:text-white transition-colors">Terms of Service</a></li>
+                  <li><a href="/legal/privacy.html" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                  <li><a href="/legal/security.html" className="hover:text-white transition-colors">Security</a></li>
+                  <li><a href="/legal/subprocessors.html" className="hover:text-white transition-colors">Sub-processors</a></li>
+                  <li><a href="/legal/refunds.html" className="hover:text-white transition-colors">Refunds</a></li>
+                  <li><a href="/legal/data-deletion.html" className="hover:text-white transition-colors">Data deletion</a></li>
                 </ul>
               </div>
 
               <div className="space-y-3">
                 <span className="font-bold text-white uppercase tracking-wider block">Customer Support</span>
                 <ul className="space-y-2 text-slate-400">
-                  <li><a href="#faq" className="hover:text-white transition-colors">Knowledge Base</a></li>
-                  <li><a href="#how-it-works" className="hover:text-white transition-colors">Syncall Academy</a></li>
+                  <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
+                  <li><a href="/legal/contact.html" className="hover:text-white transition-colors">Contact</a></li>
                 </ul>
               </div>
 
               <div className="space-y-3">
                 <span className="font-bold text-white uppercase tracking-wider block">Company</span>
                 <ul className="space-y-2 text-slate-400">
-                  <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                  <li><a href="https://vornyxmedia.com" className="hover:text-white transition-colors">Vornyx Media</a></li>
                 </ul>
               </div>
             </div>
@@ -185,15 +184,15 @@ export const Footer: React.FC<FooterProps> = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>
-            © {new Date().getFullYear()} Syncall. All rights reserved.
+            © {new Date().getFullYear()} Vornyx Media LLP. All rights reserved.
             <span className="mx-2 text-slate-700">·</span>
             Powered by <span className="text-slate-300 font-medium">Vornyx Media</span>
           </p>
 
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Security</a>
+            <a href="/legal/privacy.html" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="/legal/terms.html" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="/legal/security.html" className="hover:text-white transition-colors">Security</a>
             
             <button
               onClick={scrollToTop}

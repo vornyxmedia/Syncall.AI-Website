@@ -12,7 +12,6 @@ import { ClosingCta } from './components/ClosingCta';
 import { Footer } from './components/Footer';
 import { AuthModal, AuthMode } from './components/AuthModal';
 import { ContactModal } from './components/ContactModal';
-import { CustomerResults } from './components/CustomerResults';
 import { OnePlatformSection } from './components/OnePlatformSection';
 import { ThreeKindsOfScale } from './components/ThreeKindsOfScale';
 
@@ -86,9 +85,6 @@ function MainLayout() {
 
         {/* Meet the AI: Panoramic 3D Wave Curtain Banner */}
         <MeetTheAi onOpenSignUp={() => openAuth('signup')} />
-
-        {/* Real numbers from teams that made the switch */}
-        <CustomerResults />
 
         {/* One Platform. Tuned to Every Account You Run */}
         <OnePlatformSection 
