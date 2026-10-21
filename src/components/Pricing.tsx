@@ -1,7 +1,8 @@
 import React from 'react';
 import { Check, ArrowRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import { PLANS, PlanKey } from '../data/plans';
+import { PLANS, PlanKey, planPrice } from '../data/plans';
+import { CURRENCIES, CURRENCY_NAMES, useCurrency } from '../context/CurrencyContext';
 import { CONTACT_EMAIL } from '../config';
 
 interface PricingProps {
@@ -11,6 +12,7 @@ interface PricingProps {
 export const Pricing: React.FC<PricingProps> = ({ onChoosePlan }) => {
   const { isDuskMode } = useTheme();
   const isV2 = isDuskMode;
+  const { currency, setCurrency } = useCurrency();
 
   return (
     <section id="pricing" className={`relative py-14 sm:py-16 lg:py-[100px] overflow-hidden transition-colors duration-500 ${isV2 ? 'bg-[#070814] text-white' : 'bg-white text-slate-900'}`}>
@@ -25,6 +27,27 @@ export const Pricing: React.FC<PricingProps> = ({ onChoosePlan }) => {
           </p>
         </div>
 
+        <div className="flex justify-center mb-8">
+          <div role="radiogroup" aria-label="Currency" className={`inline-flex p-1 rounded-full text-sm font-semibold ${isV2 ? 'bg-white/[0.06] border border-white/10' : 'bg-slate-100'}`}>
+            {CURRENCIES.map((c) => (
+              <button
+                key={c}
+                type="button"
+                role="radio"
+                aria-checked={currency === c}
+                onClick={() => setCurrency(c)}
+                className={`px-4 py-1.5 rounded-full transition-colors cursor-pointer ${
+                  currency === c
+                    ? 'bg-purple-600 text-white'
+                    : isV2 ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {PLANS.map((plan) => (
             <div
@@ -37,7 +60,7 @@ export const Pricing: React.FC<PricingProps> = ({ onChoosePlan }) => {
             >
               <div className="flex items-center justify-between gap-3">
                 <h3 className={`text-xl font-bold tracking-tight ${isV2 ? 'text-white' : 'text-slate-900'}`}>{plan.name}</h3>
-                {plan.period && (
+                {plan.prices && (
                   <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${isV2 ? 'bg-purple-500/20 text-purple-200' : 'bg-purple-100 text-purple-700'}`}>
                     1 month free
                   </span>
@@ -45,9 +68,9 @@ export const Pricing: React.FC<PricingProps> = ({ onChoosePlan }) => {
               </div>
 
               <div className="mt-5 flex items-baseline gap-1">
-                {plan.pricePrefix && <span className={`text-sm font-medium mr-1 ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>{plan.pricePrefix}</span>}
-                <span className={`text-4xl font-extrabold tracking-tight ${isV2 ? 'text-white' : 'text-slate-900'}`}>{plan.price}</span>
-                {plan.period && <span className={`text-sm font-medium ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>{plan.period}</span>}
+                {plan.priceFrom && <span className={`text-sm font-medium mr-1 ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>From</span>}
+                <span className={`text-4xl font-extrabold tracking-tight ${isV2 ? 'text-white' : 'text-slate-900'}`}>{planPrice(plan, currency)}</span>
+                {plan.prices && <span className={`text-sm font-medium ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>/month</span>}
               </div>
               <p className={`mt-1.5 text-xs font-semibold ${isV2 ? 'text-purple-300' : 'text-purple-700'}`}>{plan.note}</p>
 
@@ -89,7 +112,7 @@ export const Pricing: React.FC<PricingProps> = ({ onChoosePlan }) => {
         </div>
 
         <p className={`mt-10 text-center text-xs font-medium ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>
-          Prices in Indian rupees. No card is taken during the free month, so nothing is charged unless you choose to subscribe. See our{' '}
+          Prices in {CURRENCY_NAMES[currency]}. No card is taken during the free month, so nothing is charged unless you choose to subscribe. See our{' '}
           <a href="/legal/refunds.html" className="underline hover:text-purple-500">refund policy</a>.
         </p>
       </div>

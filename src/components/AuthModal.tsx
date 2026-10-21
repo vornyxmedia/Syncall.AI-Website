@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { X, Eye, EyeOff, MailCheck } from 'lucide-react';
 import { API_ORIGIN, APP_ORIGIN, CONTACT_EMAIL } from '../config';
-import { PlanKey, planByKey } from '../data/plans';
+import { PlanKey, planByKey, planPrice } from '../data/plans';
+import { Currency, useCurrency } from '../context/CurrencyContext';
 
 export type AuthMode = 'signin' | 'signup';
 
@@ -36,10 +37,10 @@ const UNREACHABLE = `We couldn't reach syncall.ai just now. Please try again in 
 const inputClass =
   'w-full rounded-xl bg-white border border-slate-200 px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/15';
 
-const planLine = (key: PlanKey) => {
+const planLine = (key: PlanKey, currency: Currency) => {
   const plan = planByKey(key);
-  const price = `${plan.pricePrefix ? `${plan.pricePrefix.toLowerCase()} ` : ''}${plan.price}${plan.period ?? ''}`;
-  return plan.period ? `${plan.name} plan · ${plan.note}, then ${price}.` : `${plan.name} plan · ${plan.note}.`;
+  const price = `${plan.priceFrom ? 'from ' : ''}${planPrice(plan, currency)}/month`;
+  return plan.prices ? `${plan.name} plan · ${plan.note}, then ${price}.` : `${plan.name} plan · ${plan.note}.`;
 };
 
 async function post(path: string, body: unknown) {
@@ -54,6 +55,7 @@ async function post(path: string, body: unknown) {
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'signup', plan = 'grow' }) => {
+  const { currency } = useCurrency();
   const [mode, setMode] = useState<AuthMode>(initialMode);
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
@@ -180,7 +182,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
               <h3 id="auth-modal-title" className="text-2xl font-bold text-slate-900 tracking-tight">
                 {copy.title}
               </h3>
-              <p className="text-sm text-slate-600">{mode === 'signup' ? planLine(plan) : copy.subtitle}</p>
+              <p className="text-sm text-slate-600">{mode === 'signup' ? planLine(plan, currency) : copy.subtitle}</p>
             </div>
 
             {/* Sign in / Sign up switch */}

@@ -14,6 +14,7 @@ import { ThreeKindsOfScale } from './components/ThreeKindsOfScale';
 import { SiteLayout } from './components/SiteLayout';
 
 import { ThemeProvider } from './context/ThemeContext';
+import { CurrencyProvider } from './context/CurrencyContext';
 
 const scrollToDemo = () => {
   const el = document.getElementById('live-demo');
@@ -85,7 +86,9 @@ function HomePage() {
 export function App() {
   return (
     <ThemeProvider>
-      <HomePage />
+      <CurrencyProvider>
+        <HomePage />
+      </CurrencyProvider>
     </ThemeProvider>
   );
 }

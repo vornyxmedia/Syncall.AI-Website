@@ -1,13 +1,14 @@
-// Keys are the plan identifiers the sync.all API accepts at sign-up
-// (api/src/modules/billing/plans.ts); names and prices are what the site shows.
+// Keys are the plan identifiers the sync.all API accepts at sign-up, and the
+// prices mirror PLANS in api/src/modules/billing/plans.ts.
+import { Currency, formatPrice } from '../context/CurrencyContext';
+
 export type PlanKey = 'grow' | 'scale' | 'agency';
 
 export interface Plan {
   key: PlanKey;
   name: string;
-  price: string;
-  pricePrefix?: string;
-  period?: string;
+  prices: Record<Currency, number> | null;
+  priceFrom?: boolean;
   note: string;
   features: string[];
   cta: string;
@@ -19,8 +20,7 @@ export const PLANS: Plan[] = [
   {
     key: 'grow',
     name: 'Standard',
-    price: '₹1,200',
-    period: '/month',
+    prices: { INR: 1200, USD: 29, EUR: 29, GBP: 25 },
     note: 'First month free, no card needed',
     features: [
       'Dashboards across every account you run',
@@ -35,9 +35,8 @@ export const PLANS: Plan[] = [
   {
     key: 'scale',
     name: 'AI+',
-    pricePrefix: 'From',
-    price: '₹1,500',
-    period: '/month',
+    prices: { INR: 1500, USD: 49, EUR: 49, GBP: 42 },
+    priceFrom: true,
     note: 'First month free, no card needed',
     features: [
       'Everything in Standard',
@@ -48,7 +47,7 @@ export const PLANS: Plan[] = [
   {
     key: 'agency',
     name: 'Enterprise',
-    price: 'Custom',
+    prices: null,
     note: 'For larger agencies and teams',
     features: [
       'Everything in AI+',
@@ -60,3 +59,6 @@ export const PLANS: Plan[] = [
 ];
 
 export const planByKey = (key: PlanKey) => PLANS.find((p) => p.key === key)!;
+
+export const planPrice = (plan: Plan, currency: Currency) =>
+  plan.prices ? formatPrice(plan.prices[currency], currency) : 'Custom';
