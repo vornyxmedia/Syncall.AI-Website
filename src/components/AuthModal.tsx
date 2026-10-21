@@ -38,7 +38,8 @@ const inputClass =
 
 const planLine = (key: PlanKey) => {
   const plan = planByKey(key);
-  return plan.period ? `${plan.name} plan · ${plan.note}, then ${plan.price}${plan.period}.` : `${plan.name} plan · ${plan.note}.`;
+  const price = `${plan.pricePrefix ? `${plan.pricePrefix.toLowerCase()} ` : ''}${plan.price}${plan.period ?? ''}`;
+  return plan.period ? `${plan.name} plan · ${plan.note}, then ${price}.` : `${plan.name} plan · ${plan.note}.`;
 };
 
 async function post(path: string, body: unknown) {

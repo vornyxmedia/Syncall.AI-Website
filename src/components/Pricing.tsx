@@ -21,11 +21,11 @@ export const Pricing: React.FC<PricingProps> = ({ onChoosePlan }) => {
             Simple pricing. First month free.
           </h2>
           <p className={`text-base sm:text-lg max-w-2xl mx-auto leading-relaxed ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>
-            Start free, or try Grow or Scale free for a month with no credit card. Cancel any time.
+            Try Standard or AI+ free for your first month, with no credit card. Cancel any time.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {PLANS.map((plan) => (
             <div
               key={plan.key}
@@ -37,7 +37,7 @@ export const Pricing: React.FC<PricingProps> = ({ onChoosePlan }) => {
             >
               <div className="flex items-center justify-between gap-3">
                 <h3 className={`text-xl font-bold tracking-tight ${isV2 ? 'text-white' : 'text-slate-900'}`}>{plan.name}</h3>
-                {plan.featured && (
+                {plan.period && (
                   <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${isV2 ? 'bg-purple-500/20 text-purple-200' : 'bg-purple-100 text-purple-700'}`}>
                     1 month free
                   </span>
@@ -45,6 +45,7 @@ export const Pricing: React.FC<PricingProps> = ({ onChoosePlan }) => {
               </div>
 
               <div className="mt-5 flex items-baseline gap-1">
+                {plan.pricePrefix && <span className={`text-sm font-medium mr-1 ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>{plan.pricePrefix}</span>}
                 <span className={`text-4xl font-extrabold tracking-tight ${isV2 ? 'text-white' : 'text-slate-900'}`}>{plan.price}</span>
                 {plan.period && <span className={`text-sm font-medium ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>{plan.period}</span>}
               </div>
@@ -61,7 +62,7 @@ export const Pricing: React.FC<PricingProps> = ({ onChoosePlan }) => {
 
               {plan.contactSales ? (
                 <a
-                  href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Agency plan')}`}
+                  href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Enterprise plan')}`}
                   className={`mt-8 w-full py-3 rounded-full font-bold text-sm inline-flex items-center justify-center gap-2 border transition-colors ${
                     isV2 ? 'border-white/20 text-white hover:bg-white/10' : 'border-slate-300 text-slate-900 hover:bg-slate-50'
                   }`}
@@ -88,7 +89,7 @@ export const Pricing: React.FC<PricingProps> = ({ onChoosePlan }) => {
         </div>
 
         <p className={`mt-10 text-center text-xs font-medium ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>
-          Prices in US dollars. No card is taken during the free month, so nothing is charged unless you choose to subscribe. See our{' '}
+          Prices in Indian rupees. No card is taken during the free month, so nothing is charged unless you choose to subscribe. See our{' '}
           <a href="/legal/refunds.html" className="underline hover:text-purple-500">refund policy</a>.
         </p>
       </div>

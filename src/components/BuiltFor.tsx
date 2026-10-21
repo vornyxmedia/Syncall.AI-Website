@@ -139,7 +139,7 @@ export const BuiltFor: React.FC<BuiltForProps> = ({ onOpenSignUp }) => {
             <ArrowRight className="w-4 h-4" />
           </button>
           <p className={`mt-6 sm:mt-7 text-xs font-medium ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>
-            First month free on Grow and Scale · No credit card required
+            First month free on Standard and AI+ · No credit card required
           </p>
         </div>
 

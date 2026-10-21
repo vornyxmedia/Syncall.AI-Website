@@ -1,10 +1,12 @@
-// Mirrors PLANS and PLAN_LIMITS in the sync.all API (api/src/modules/billing/plans.ts).
-export type PlanKey = 'starter' | 'grow' | 'scale' | 'agency';
+// Keys are the plan identifiers the sync.all API accepts at sign-up
+// (api/src/modules/billing/plans.ts); names and prices are what the site shows.
+export type PlanKey = 'grow' | 'scale' | 'agency';
 
 export interface Plan {
   key: PlanKey;
   name: string;
   price: string;
+  pricePrefix?: string;
   period?: string;
   note: string;
   features: string[];
@@ -15,61 +17,42 @@ export interface Plan {
 
 export const PLANS: Plan[] = [
   {
-    key: 'starter',
-    name: 'Starter',
-    price: 'Free',
-    note: 'Free forever, no card needed',
-    features: [
-      '2 connected platform logins',
-      '3 synced ad and analytics accounts',
-      'Data refreshed every 24 hours',
-      '30 days of history',
-      '10 AI questions a month',
-    ],
-    cta: 'Start free',
-  },
-  {
     key: 'grow',
-    name: 'Grow',
-    price: '$79',
+    name: 'Standard',
+    price: '₹1,200',
     period: '/month',
     note: 'First month free, no card needed',
     features: [
-      '10 connected platform logins',
-      '25 synced ad and analytics accounts',
-      'Data refreshed every 6 hours',
-      '1 year of history',
-      '100 AI questions a month',
+      'Dashboards across every account you run',
+      'CSV and Google Sheets data, with platform connectors as they go live',
+      'Anomaly and trend insights',
+      'Marketing calculators',
+      'Client workspaces for agencies',
     ],
     cta: 'Start your free month',
     featured: true,
   },
   {
     key: 'scale',
-    name: 'Scale',
-    price: '$199',
+    name: 'AI+',
+    pricePrefix: 'From',
+    price: '₹1,500',
     period: '/month',
     note: 'First month free, no card needed',
     features: [
-      '25 connected platform logins',
-      '100 synced ad and analytics accounts',
-      'Data refreshed every hour',
-      '2 years of history',
-      '500 AI questions a month',
+      'Everything in Standard',
+      'Ask your data: questions in plain English, answered from your own numbers',
     ],
     cta: 'Start your free month',
   },
   {
     key: 'agency',
-    name: 'Agency',
+    name: 'Enterprise',
     price: 'Custom',
-    note: 'For larger teams and client portfolios',
+    note: 'For larger agencies and teams',
     features: [
-      'Unlimited connected platform logins',
-      'Unlimited synced accounts',
-      'Data refreshed every hour',
-      'Unlimited history',
-      'Unlimited AI questions',
+      'Everything in AI+',
+      'Pricing set around your accounts and usage',
     ],
     cta: 'Talk to us',
     contactSales: true,
