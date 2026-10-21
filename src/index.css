@@ -140,3 +140,68 @@ body::-webkit-scrollbar-thumb:active {
     animation: none;
   }
 }
+
+/* ==========================================================================
+   Legal pages (policy text rendered from src/legal/content)
+   ========================================================================== */
+
+@layer components {
+  .legal-prose {
+    @apply text-slate-600 text-[15px] sm:text-base leading-[1.8] break-words;
+  }
+  .legal-prose h1 {
+    @apply text-slate-900 text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] mb-3;
+  }
+  .legal-prose h1 + p {
+    @apply text-slate-500 text-sm font-medium mb-10;
+  }
+  .legal-prose h2 {
+    @apply text-slate-900 text-xl sm:text-2xl font-bold tracking-tight leading-snug mt-12 mb-3 pt-8 border-t border-slate-200;
+  }
+  .legal-prose h3 {
+    @apply text-slate-900 text-lg font-bold mt-8 mb-2;
+  }
+  .legal-prose p,
+  .legal-prose li {
+    @apply mb-4;
+  }
+  .legal-prose ul,
+  .legal-prose ol {
+    @apply mb-5 pl-5;
+  }
+  .legal-prose ul { @apply list-disc; }
+  .legal-prose ol { @apply list-decimal; }
+  .legal-prose li::marker { @apply text-purple-600; }
+  .legal-prose strong { @apply text-slate-900 font-bold; }
+  .legal-prose a {
+    @apply text-purple-700 underline decoration-purple-300 underline-offset-[3px] hover:text-purple-900;
+  }
+  .legal-prose .table-wrap {
+    @apply my-6 overflow-x-auto rounded-2xl border border-slate-200 bg-white;
+  }
+  .legal-prose table {
+    @apply w-full min-w-[36rem] border-collapse text-sm leading-relaxed;
+  }
+  .legal-prose th {
+    @apply bg-slate-50 text-slate-900 text-xs font-bold uppercase tracking-wider text-left px-4 py-3.5;
+  }
+  .legal-prose td {
+    @apply px-4 py-3.5 align-top text-left;
+  }
+  .legal-prose tr + tr td { @apply border-t border-slate-200; }
+  .legal-prose td:first-child { @apply text-slate-900 font-semibold; }
+
+  .legal-prose--dark { @apply text-slate-300; }
+  .legal-prose--dark h1,
+  .legal-prose--dark h2,
+  .legal-prose--dark h3,
+  .legal-prose--dark strong,
+  .legal-prose--dark td:first-child { @apply text-white; }
+  .legal-prose--dark h1 + p { @apply text-slate-400; }
+  .legal-prose--dark h2 { @apply border-white/10; }
+  .legal-prose--dark li::marker { @apply text-purple-400; }
+  .legal-prose--dark a { @apply text-purple-300 decoration-purple-300/40 hover:text-white; }
+  .legal-prose--dark .table-wrap { @apply border-white/10 bg-[#0e1126]; }
+  .legal-prose--dark th { @apply bg-[#131738] text-white; }
+  .legal-prose--dark tr + tr td { @apply border-white/10; }
+}

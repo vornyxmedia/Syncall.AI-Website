@@ -46,6 +46,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSignUp, onOpenLogin, onOpe
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
         window.history.pushState(null, '', href);
+      } else {
+        window.location.assign(`/${href}`);
       }
     }
   };
@@ -68,8 +70,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSignUp, onOpenLogin, onOpe
         {/* Left: Brand Logo & Desktop Nav Links (Whatagraph layout) */}
         <div className="flex items-center gap-7 lg:gap-9">
           <a 
-            href="#" 
+            href="/"
             onClick={(e) => {
+              if (window.location.pathname !== '/') return;
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
               window.history.pushState(null, '', ' ');
@@ -249,9 +252,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSignUp, onOpenLogin, onOpe
               </div>
             </div>
 
-            {/* 4. Pricing (Direct Link to Free Trial) */}
+            {/* 4. Pricing */}
             <button 
-              onClick={onOpenSignUp}
+              onClick={() => handleLinkClick('#pricing')}
               className={`text-sm font-semibold transition-colors duration-300 py-1.5 text-left ${
                 isDarkHeader ? 'text-slate-200 hover:text-white' : 'text-slate-700 hover:text-purple-700'
               }`}
@@ -443,10 +446,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSignUp, onOpenLogin, onOpe
           </a>
 
           <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenSignUp();
-            }}
+            onClick={() => handleLinkClick('#pricing')}
             className="text-sm font-semibold text-slate-800 hover:text-purple-700 py-2.5 px-3 rounded-xl hover:bg-purple-50 transition-colors duration-200 text-left w-full"
           >
             Pricing

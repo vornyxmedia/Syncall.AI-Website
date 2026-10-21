@@ -27,7 +27,7 @@ export const Footer: React.FC<FooterProps> = () => {
           
           {/* Brand Column (Span 4 cols) */}
           <div className="lg:col-span-4 space-y-4">
-            <a href="#" className="inline-block">
+            <a href="/" className="inline-block">
               <img 
                 src={`${import.meta.env.BASE_URL}logo.png`}
                 alt="Syncall.ai" 
@@ -100,19 +100,19 @@ export const Footer: React.FC<FooterProps> = () => {
               <div className="space-y-3">
                 <span className="font-bold text-white uppercase tracking-wider block">Platform</span>
                 <ul className="space-y-2 text-slate-400">
-                  <li><a href="#what-you-get" className="hover:text-white transition-colors">Data Cloud</a></li>
-                  <li><a href="#meet-ai" className="hover:text-white transition-colors">AI Agents Showcase</a></li>
-                  <li><a href="#one-platform" className="hover:text-white transition-colors">Integrations</a></li>
+                  <li><a href="/#what-you-get" className="hover:text-white transition-colors">Data Cloud</a></li>
+                  <li><a href="/#meet-ai" className="hover:text-white transition-colors">AI Agents Showcase</a></li>
+                  <li><a href="/#one-platform" className="hover:text-white transition-colors">Integrations</a></li>
                 </ul>
               </div>
 
               <div className="space-y-3">
                 <span className="font-bold text-white uppercase tracking-wider block">Marketing Apps</span>
                 <ul className="space-y-2 text-slate-400">
-                  <li><a href="#what-you-get" className="hover:text-white transition-colors">Reporting</a></li>
-                  <li><a href="#live-demo" className="hover:text-white transition-colors">Dashboards</a></li>
-                  <li><a href="#meet-ai" className="hover:text-white transition-colors">AI Agents</a></li>
-                  <li><a href="#what-you-get" className="hover:text-white transition-colors">Budget Management</a></li>
+                  <li><a href="/#what-you-get" className="hover:text-white transition-colors">Reporting</a></li>
+                  <li><a href="/#live-demo" className="hover:text-white transition-colors">Dashboards</a></li>
+                  <li><a href="/#meet-ai" className="hover:text-white transition-colors">AI Agents</a></li>
+                  <li><a href="/#what-you-get" className="hover:text-white transition-colors">Budget Management</a></li>
                 </ul>
               </div>
             </div>
@@ -121,13 +121,13 @@ export const Footer: React.FC<FooterProps> = () => {
             <div className="space-y-3">
               <span className="font-bold text-white uppercase tracking-wider block">For Teams</span>
               <ul className="space-y-2 text-slate-400">
-                <li><a href="#built-for" className="hover:text-white transition-colors">Marketing</a></li>
-                <li><a href="#what-you-get" className="hover:text-white transition-colors">Insights & Analytics</a></li>
-                <li><a href="#one-platform" className="hover:text-white transition-colors">Engineering & Product</a></li>
-                <li><a href="#three-kinds-of-scale" className="hover:text-white transition-colors">Client Success</a></li>
-                <li><a href="#three-kinds-of-scale" className="hover:text-white transition-colors">Operations</a></li>
-                <li><a href="#built-for" className="hover:text-white transition-colors">Small Business Owners</a></li>
-                <li><a href="#built-for" className="hover:text-white transition-colors">Solo Founders</a></li>
+                <li><a href="/#built-for" className="hover:text-white transition-colors">Marketing</a></li>
+                <li><a href="/#what-you-get" className="hover:text-white transition-colors">Insights & Analytics</a></li>
+                <li><a href="/#one-platform" className="hover:text-white transition-colors">Engineering & Product</a></li>
+                <li><a href="/#three-kinds-of-scale" className="hover:text-white transition-colors">Client Success</a></li>
+                <li><a href="/#three-kinds-of-scale" className="hover:text-white transition-colors">Operations</a></li>
+                <li><a href="/#built-for" className="hover:text-white transition-colors">Small Business Owners</a></li>
+                <li><a href="/#built-for" className="hover:text-white transition-colors">Solo Founders</a></li>
               </ul>
             </div>
 
@@ -148,7 +148,7 @@ export const Footer: React.FC<FooterProps> = () => {
               <div className="space-y-3">
                 <span className="font-bold text-white uppercase tracking-wider block">Customer Support</span>
                 <ul className="space-y-2 text-slate-400">
-                  <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
+                  <li><a href="/#faq" className="hover:text-white transition-colors">FAQ</a></li>
                   <li><a href="/legal/contact.html" className="hover:text-white transition-colors">Contact</a></li>
                 </ul>
               </div>

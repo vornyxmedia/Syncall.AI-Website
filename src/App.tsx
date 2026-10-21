@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Navbar } from './components/Navbar';
+import React from 'react';
 import { Hero } from './components/Hero';
 import { ProblemSection } from './components/ProblemSection';
 import { MeetTheAi } from './components/MeetTheAi';
@@ -7,137 +6,86 @@ import { WhatYouGet } from './components/WhatYouGet';
 import { InteractiveDashboardDemo } from './components/InteractiveDashboardDemo';
 import { HowItWorks } from './components/HowItWorks';
 import { BuiltFor } from './components/BuiltFor';
+import { Pricing } from './components/Pricing';
 import { FaqSection } from './components/FaqSection';
 import { ClosingCta } from './components/ClosingCta';
-import { Footer } from './components/Footer';
-import { AuthModal, AuthMode } from './components/AuthModal';
-import { ContactModal } from './components/ContactModal';
 import { OnePlatformSection } from './components/OnePlatformSection';
 import { ThreeKindsOfScale } from './components/ThreeKindsOfScale';
+import { SiteLayout } from './components/SiteLayout';
 
-import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { ThemeProvider } from './context/ThemeContext';
 
-function MainLayout() {
-  const { theme, isDuskMode } = useTheme();
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<AuthMode>('signup');
-  const [contactModalOpen, setContactModalOpen] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+const scrollToDemo = () => {
+  const el = document.getElementById('live-demo');
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) {
-        setScrollProgress(Math.min(100, Math.max(0, (window.scrollY / totalScroll) * 100)));
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const openAuth = (mode: AuthMode) => {
-    setAuthMode(mode);
-    setAuthModalOpen(true);
-  };
-
-  const scrollToDemo = () => {
-    const el = document.getElementById('live-demo');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
+function HomePage() {
   return (
-    <div className={`relative min-h-screen font-sans transition-colors duration-500 ${
-      isDuskMode
-        ? 'bg-[#070814] text-white selection:bg-purple-500 selection:text-white'
-        : 'bg-white text-slate-900 selection:bg-purple-600 selection:text-white'
-    }`}>
-      {/* Top Scroll Reading Progress Indicator */}
-      <div
-        className="fixed top-0 left-0 right-0 h-[3px] bg-purple-500 z-[100] origin-left pointer-events-none transition-[width] duration-100 ease-out"
-        style={{ width: `${scrollProgress}%` }}
-      />
+    <SiteLayout>
+      {({ openAuth, openContact }) => {
+        const openSignUp = () => openAuth('signup');
+        return (
+          <main>
+            <Hero
+              onOpenSignUp={openSignUp}
+              onScrollToDemo={scrollToDemo}
+            />
 
-      {/* Top Navbar */}
-      <Navbar 
-        onOpenSignUp={() => openAuth('signup')}
-        onOpenLogin={() => openAuth('signin')} 
-        onOpenContactModal={() => setContactModalOpen(true)} 
-      />
+            {/* How it works: 3-Tier Interactive Showcase */}
+            <HowItWorks onOpenSignUp={openSignUp} />
 
-      {/* Hero Section */}
-      <main>
-        <Hero 
-          onOpenSignUp={() => openAuth('signup')} 
-          onScrollToDemo={scrollToDemo} 
-        />
+            {/* Why marketing feels harder than it should */}
+            <ProblemSection
+              onOpenSignUp={openSignUp}
+              onOpenContactModal={openContact}
+            />
 
-        {/* How it works: 3-Tier Interactive Showcase */}
-        <HowItWorks onOpenSignUp={() => openAuth('signup')} />
+            {/* Meet the AI: Panoramic 3D Wave Curtain Banner */}
+            <MeetTheAi onOpenSignUp={openSignUp} />
 
-        {/* Why marketing feels harder than it should */}
-        <ProblemSection 
-          onOpenSignUp={() => openAuth('signup')} 
-          onOpenContactModal={() => setContactModalOpen(true)} 
-        />
+            {/* One Platform. Tuned to Every Account You Run */}
+            <OnePlatformSection
+              onOpenContactModal={openContact}
+              onOpenSignUp={openSignUp}
+            />
 
-        {/* Meet the AI: Panoramic 3D Wave Curtain Banner */}
-        <MeetTheAi onOpenSignUp={() => openAuth('signup')} />
+            {/* Three Kinds of Scale. One Platform. */}
+            <ThreeKindsOfScale onOpenContactModal={openContact} />
 
-        {/* One Platform. Tuned to Every Account You Run */}
-        <OnePlatformSection 
-          onOpenContactModal={() => setContactModalOpen(true)} 
-          onOpenSignUp={() => openAuth('signup')} 
-        />
+            {/* What you get: 7 Features & Core Spotlight */}
+            <WhatYouGet />
 
-        {/* Three Kinds of Scale. One Platform. */}
-        <ThreeKindsOfScale onOpenContactModal={() => setContactModalOpen(true)} />
+            {/* Interactive Dashboard Demo Simulator */}
+            <InteractiveDashboardDemo />
 
-        {/* What you get: 7 Features & Core Spotlight */}
-        <WhatYouGet />
+            {/* Built for: Personas */}
+            <BuiltFor onOpenSignUp={openSignUp} />
 
-        {/* Interactive Dashboard Demo Simulator */}
-        <InteractiveDashboardDemo />
+            {/* Plans and prices */}
+            <Pricing onChoosePlan={(plan) => openAuth('signup', plan)} />
 
-        {/* Built for: Personas */}
-        <BuiltFor onOpenSignUp={() => openAuth('signup')} />
+            {/* Frequently asked questions */}
+            <FaqSection onOpenContactModal={openContact} />
 
-        {/* Frequently asked questions */}
-        <FaqSection onOpenContactModal={() => setContactModalOpen(true)} />
-
-        {/* Closing call to action */}
-        <ClosingCta 
-          onOpenSignUp={() => openAuth('signup')} 
-          onOpenContactModal={() => setContactModalOpen(true)} 
-        />
-      </main>
-
-      {/* Footer */}
-      <Footer
-        onOpenSignUp={() => openAuth('signup')}
-        onOpenContactModal={() => setContactModalOpen(true)}
-      />
-
-      {/* Modals */}
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        initialMode={authMode}
-      />
-      <ContactModal 
-        isOpen={contactModalOpen} 
-        onClose={() => setContactModalOpen(false)} 
-      />
-    </div>
+            {/* Closing call to action */}
+            <ClosingCta
+              onOpenSignUp={openSignUp}
+              onOpenContactModal={openContact}
+            />
+          </main>
+        );
+      }}
+    </SiteLayout>
   );
 }
 
 export function App() {
   return (
     <ThemeProvider>
-      <MainLayout />
+      <HomePage />
     </ThemeProvider>
   );
 }
