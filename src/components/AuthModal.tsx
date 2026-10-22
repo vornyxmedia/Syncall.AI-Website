@@ -166,7 +166,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
             <MailCheck className="w-10 h-10 text-purple-600" />
             <h3 id="auth-modal-title" className="text-2xl font-bold text-slate-900 tracking-tight">Check your inbox</h3>
             <p className="text-sm text-slate-600 leading-relaxed">
-              We sent a verification link to <span className="font-semibold text-slate-900">{email.trim()}</span>. Open it to activate your account, then sign in.
+              We sent a verification link to <span className="font-semibold text-slate-900">{email.trim()}</span>. Open it to sign in and set up your workspace.
             </p>
             <button
               type="button"
