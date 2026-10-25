@@ -6,13 +6,29 @@ import { useTheme } from '../context/ThemeContext';
 interface TeamMember {
   name: string;
   role: string;
-  initials: string;
+  photo: string;
+  bio: string;
 }
 
 export const TEAM: TeamMember[] = [
-  { name: 'Sanjay', role: 'Founder', initials: 'S' },
-  { name: 'Abhishek Anshuman', role: 'Head of Engineering', initials: 'AA' },
-  { name: 'Pawan Kumar', role: 'Operations', initials: 'PK' },
+  {
+    name: 'Sanjay Kumar',
+    role: 'Founder',
+    photo: '/team/sanjay-kumar.jpg',
+    bio: 'Founded Vornyx Media and leads its direction, from the agency work for clients to building Syncall.',
+  },
+  {
+    name: 'Abhishek Anshuman',
+    role: 'Head of Engineering',
+    photo: '/team/abhishek-anshuman.jpg',
+    bio: 'Leads engineering and builds the Syncall platform: data connections, dashboards, AI insights and the infrastructure behind them.',
+  },
+  {
+    name: 'Pawan Kumar',
+    role: 'Operations',
+    photo: '/team/pawan-kumar.jpg',
+    bio: 'Runs day-to-day operations and keeps projects, schedules and client delivery on track.',
+  },
 ];
 
 const EMAILS = [
@@ -52,17 +68,30 @@ export const AboutPage: React.FC = () => {
 
             <section aria-labelledby="team-heading" className="mt-14 sm:mt-20">
               <h2 id="team-heading" className={`text-2xl sm:text-3xl font-bold tracking-tight ${heading}`}>Our team</h2>
-              <ul className="mt-6 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <p className={`mt-3 max-w-2xl leading-relaxed ${muted}`}>
+                A small team that builds the product, runs the agency and answers your emails.
+              </p>
+              <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {TEAM.map((member) => (
-                  <li key={member.name} className={`rounded-2xl border p-6 sm:p-8 flex flex-col items-center text-center ${card}`}>
-                    <span
-                      aria-hidden="true"
-                      className="w-20 h-20 rounded-full grid place-items-center text-2xl font-extrabold text-white bg-gradient-to-br from-[#6D28D9] via-[#7C3AED] to-[#4F46E5]"
-                    >
-                      {member.initials}
-                    </span>
-                    <h3 className={`mt-5 text-lg font-bold ${heading}`}>{member.name}</h3>
-                    <p className={`mt-1 text-sm font-semibold ${isV2 ? 'text-purple-300' : 'text-purple-700'}`}>{member.role}</p>
+                  <li key={member.name} className={`group rounded-3xl border overflow-hidden flex flex-col ${card}`}>
+                    <div className="relative aspect-[4/5] overflow-hidden">
+                      <img
+                        src={member.photo}
+                        alt={`Portrait of ${member.name}`}
+                        width={640}
+                        height={800}
+                        loading="lazy"
+                        className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-[#070814]/75 via-[#070814]/20 to-transparent" />
+                      <div className="absolute left-5 right-5 bottom-5">
+                        <h3 className="text-xl font-bold text-white tracking-tight">{member.name}</h3>
+                        <span className="mt-2 inline-flex rounded-full bg-gradient-to-r from-[#6D28D9] to-[#4F46E5] px-3 py-1 text-xs font-semibold text-white">
+                          {member.role}
+                        </span>
+                      </div>
+                    </div>
+                    <p className={`p-6 text-[15px] leading-relaxed ${muted}`}>{member.bio}</p>
                   </li>
                 ))}
               </ul>
