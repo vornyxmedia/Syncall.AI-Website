@@ -156,6 +156,7 @@ export const Footer: React.FC<FooterProps> = () => {
               <div className="space-y-3">
                 <span className="font-bold text-white uppercase tracking-wider block">Company</span>
                 <ul className="space-y-2 text-slate-400">
+                  <li><a href="/about.html" className="hover:text-white transition-colors">About and team</a></li>
                   <li><a href="https://vornyxmedia.com" className="hover:text-white transition-colors">Vornyx Media</a></li>
                 </ul>
               </div>
@@ -167,7 +168,7 @@ export const Footer: React.FC<FooterProps> = () => {
               
               <div className="space-y-1">
                 <span className="text-slate-500 font-medium block">Support</span>
-                <a href="mailto:info@syncall.ai" className="hover:text-white transition-colors block">info@syncall.ai</a>
+                <a href="mailto:support@syncall.ai" className="hover:text-white transition-colors block">support@syncall.ai</a>
                 <a href="tel:+919355222725" className="text-slate-400 hover:text-white transition-colors block">+91 93552 22725</a>
               </div>
 

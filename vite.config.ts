@@ -27,6 +27,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: `${root}index.html`,
+        about: `${root}about.html`,
         ...Object.fromEntries(legalPages.map((page) => [`legal-${page}`, `${root}legal/${page}.html`])),
       },
     },
