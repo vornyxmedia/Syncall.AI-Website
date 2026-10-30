@@ -66,7 +66,7 @@ function HomePage() {
             <BuiltFor onOpenSignUp={openSignUp} />
 
             {/* Plans and prices */}
-            <Pricing onChoosePlan={(plan) => openAuth('signup', plan)} />
+            <Pricing />
 
             {/* Frequently asked questions */}
             <FaqSection onOpenContactModal={openContact} />
