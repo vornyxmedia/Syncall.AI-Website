@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
-import { AuthModal, AuthMode } from './AuthModal';
 import { ContactModal } from './ContactModal';
 import { useTheme } from '../context/ThemeContext';
-import { PlanKey } from '../data/plans';
+import { APP_ORIGIN } from '../config';
+
+export type AuthMode = 'signin' | 'signup';
+export type PlanKey = 'launch' | 'grow' | 'scale';
 
 export interface SiteActions {
   openAuth: (mode: AuthMode, plan?: PlanKey) => void;
@@ -17,9 +19,6 @@ interface SiteLayoutProps {
 
 export const SiteLayout: React.FC<SiteLayoutProps> = ({ children }) => {
   const { isDuskMode } = useTheme();
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<AuthMode>('signup');
-  const [authPlan, setAuthPlan] = useState<PlanKey>('grow');
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -37,9 +36,7 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({ children }) => {
 
   const actions: SiteActions = {
     openAuth: (mode, plan = 'grow') => {
-      setAuthMode(mode);
-      setAuthPlan(plan);
-      setAuthModalOpen(true);
+      window.location.assign(mode === 'signin' ? `${APP_ORIGIN}/login` : `${APP_ORIGIN}/signup?plan=${plan}`);
     },
     openContact: () => setContactModalOpen(true),
   };
@@ -69,12 +66,6 @@ export const SiteLayout: React.FC<SiteLayoutProps> = ({ children }) => {
         onOpenContactModal={actions.openContact}
       />
 
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        initialMode={authMode}
-        plan={authPlan}
-      />
       <ContactModal
         isOpen={contactModalOpen}
         onClose={() => setContactModalOpen(false)}
