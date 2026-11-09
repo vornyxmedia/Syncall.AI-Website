@@ -33,8 +33,8 @@ export const TEAM: TeamMember[] = [
 
 const EMAILS = [
   { label: 'Sales and general questions', address: 'info@syncall.ai' },
-  { label: 'Support', address: 'support@syncall.ai' },
-  { label: 'Billing and invoices', address: 'billing@syncall.ai' },
+  { label: 'Support', address: 'info@syncall.ai' },
+  { label: 'Billing and invoices', address: 'info@syncall.ai' },
 ];
 
 export const AboutPage: React.FC = () => {
