@@ -367,6 +367,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSignUp, onOpenLogin, onOpe
           </button>
 
           <button
+            onClick={onOpenSignUp}
+            className={`text-sm font-semibold transition-colors duration-300 ${
+              isDarkHeader ? 'text-white/80 hover:text-white' : 'text-slate-700 hover:text-purple-700'
+            }`}
+          >
+            Sign up
+          </button>
+
+          <button
             onClick={onOpenContactModal || onOpenSignUp}
             className={`min-h-[38px] px-5 sm:px-6 py-2 rounded-full font-semibold text-xs sm:text-sm active:scale-[0.98] transition-all duration-300 ease-out focus-visible:outline-none ${
               isDarkHeader
@@ -471,6 +480,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSignUp, onOpenLogin, onOpe
             className="w-full py-2 text-center text-sm font-semibold text-slate-700 hover:text-purple-700 transition-colors duration-200"
           >
             Log in
+          </button>
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onOpenSignUp();
+            }}
+            className="w-full py-2 text-center text-sm font-semibold text-slate-700 hover:text-purple-700 transition-colors duration-200"
+          >
+            Sign up
           </button>
           <button
             onClick={() => {
