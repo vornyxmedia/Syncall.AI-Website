@@ -158,7 +158,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSignUp, onOpenLogin, onOpe
                     </div>
                     <div>
                       <span className="text-xs font-bold text-slate-900 block group-hover:text-purple-700 transition-colors duration-200">Live Dashboard Simulator</span>
-                      <p className="text-[11px] text-slate-500 leading-snug">Interactive real-time metrics and to-do list</p>
+                      <p className="text-[11px] text-slate-500 leading-snug">Interactive metrics and to-do list</p>
                     </div>
                   </a>
                 </div>
