@@ -63,7 +63,7 @@ export const Pricing: React.FC = () => {
 
               <div className="mt-5 flex items-baseline gap-1">
                 <span className={`text-4xl font-extrabold tracking-tight ${isV2 ? 'text-white' : 'text-slate-900'}`}>{formatPrice(pkg.prices[currency], currency)}</span>
-                <span className={`text-sm font-medium ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>/month</span>
+                <span className={`text-sm font-medium ${isV2 ? 'text-slate-400' : 'text-slate-500'}`}>{currency === 'INR' ? '/month + 18% GST' : '/month, excl. taxes'}</span>
               </div>
 
               <p className={`mt-5 text-sm leading-relaxed flex-1 ${isV2 ? 'text-slate-200' : 'text-slate-700'}`}>{pkg.description}</p>
